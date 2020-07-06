@@ -40,8 +40,21 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
-            "*": "dist"
+            "*": "dist",
+            // ligne suivante à commenter si on est à la maison
+            "secure_http": false
         },
+        // lignes suivante à commenter si on est à la maison
+        "repositories": [
+            {
+                "type": "composer",
+                "url": "http://nexus.depot-eni.fr:8081/repository/composer-proxy-packagist.org/"
+            },
+            {
+                "packagist.org": false
+            }
+        ],
+        //fin lignes à commenter
         "sort-packages": true
     },
     "autoload": {
