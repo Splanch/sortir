@@ -13,7 +13,7 @@ class SortirController extends AbstractController
      */
     public function create()
     {
-        return $this->render('sortir/creer.html.twig', [
+        return $this->render('sortir/sortie.html.twig', [
             'controller_name' => 'SortirController',
         ]);
     }
@@ -43,7 +43,7 @@ class SortirController extends AbstractController
      */
     public function annuler()
     {
-        return $this->render('sortir/sortie.html.twig', [
+        return $this->render('sortir/annuler.html.twig', [
             'controller_name' => 'SortirController',
         ]);
     }

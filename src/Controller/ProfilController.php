@@ -13,18 +13,18 @@ class ProfilController extends AbstractController
      */
     public function recherche()
     {
-        return $this->render('/accueil.html.twig', [
-            'controller_name' => 'Controller',
+        return $this->render('profil/recherche.html.twig', [
+            'controller_name' => 'ProfilController',
         ]);
     }
 
     /**
-     * @Route("/profil/{id}", name="profil")
+     * @Route("/profil/{id}", name="mon_profil")
      */
     public function monprofil()
     {
-        return $this->render('/profil.html.twig', [
-            'controller_name' => 'Controller',
+        return $this->render('profil/profil.html.twig', [
+            'controller_name' => 'ProfilController',
         ]);
     }
 
@@ -33,8 +33,8 @@ class ProfilController extends AbstractController
      */
     public function afficherprofil()
     {
-        return $this->render('/profil.html.twig', [
-            'controller_name' => 'Controller',
+        return $this->render('profil/profil.html.twig', [
+            'controller_name' => 'ProfilController',
         ]);
     }
 
