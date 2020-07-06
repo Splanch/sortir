@@ -47,7 +47,7 @@ class Participant implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $telephone;
 
@@ -76,6 +76,11 @@ class Participant implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $rattacheA;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $pseudo;
 
     public function __construct()
     {
@@ -286,6 +291,18 @@ class Participant implements UserInterface
     public function setRattacheA(?Campus $rattacheA): self
     {
         $this->rattacheA = $rattacheA;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
