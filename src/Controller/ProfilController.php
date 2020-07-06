@@ -8,18 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
 
-    /**
-     * @Route("/recherche", name="recherche")
-     */
-    public function recherche()
-    {
-        return $this->render('profil/recherche.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
-    }
+
 
     /**
-     * @Route("/profil/{id}", name="mon_profil")
+     * @Route("/profil/{id}", name="profil_mon_profil")
      */
     public function monprofil()
     {
@@ -29,7 +21,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/profil/detail/{id}", name="afficher_profil")
+     * @Route("/profil/detail/{id}", name="profil_afficher")
      */
     public function afficherprofil()
     {
