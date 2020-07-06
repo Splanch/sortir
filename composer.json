@@ -39,12 +39,12 @@
     },
     "config": {
         "optimize-autoloader": true,
+        "secure_http": false,
         "preferred-install": {
-            "*": "dist",
-            // ligne suivante à commenter si on est à la maison
-            "secure_http": false
+            "*": "dist"
+
         },
-        // lignes suivante à commenter si on est à la maison
+
         "repositories": [
             {
                 "type": "composer",
@@ -54,7 +54,7 @@
                 "packagist.org": false
             }
         ],
-        //fin lignes à commenter
+
         "sort-packages": true
     },
     "autoload": {
