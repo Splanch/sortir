@@ -77,6 +77,11 @@ class Participant implements UserInterface
      */
     private $rattacheA;
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $pseudo;
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
@@ -286,6 +291,18 @@ class Participant implements UserInterface
     public function setRattacheA(?Campus $rattacheA): self
     {
         $this->rattacheA = $rattacheA;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
