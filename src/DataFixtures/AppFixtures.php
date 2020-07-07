@@ -56,16 +56,16 @@ class AppFixtures extends Fixture
         $lieu1 = new Lieu();
         $lieu1->setNom('Tour Eiffel');
         $lieu1->setRue($faker->streetName);
-        $lieu1->setLongitude($faker->longitude);
-        $lieu1->setLatitude($faker->latitude);
+        $lieu1->setLongitude($faker->longitude($min = -180, $max = 180));
+        $lieu1->setLatitude($faker->latitude($min = -90, $max = 90));
         $lieu1->setVille($allVilles[rand(0,2)]);
         $manager->persist($lieu1);
 
         $lieu2 = new Lieu();
         $lieu2->setNom('Le Louvre');
         $lieu2->setRue($faker->streetName);
-        $lieu2->setLongitude($faker->longitude);
-        $lieu2->setLatitude($faker->latitude);
+        $lieu2->setLongitude($faker->longitude($min = -180, $max = 180));
+        $lieu2->setLatitude($faker->latitude($min = -90, $max = 90));
         $lieu2->setVille($allVilles[rand(0,2)]);
         $manager->persist($lieu2);
 
@@ -74,8 +74,8 @@ class AppFixtures extends Fixture
         $lieu3 = new Lieu();
         $lieu3->setNom('Le Vieux Port');
         $lieu3->setRue($faker->streetName);
-        $lieu3->setLongitude($faker->longitude);
-        $lieu3->setLatitude($faker->latitude);
+        $lieu3->setLongitude($faker->longitude($min = -180, $max = 180));
+        $lieu3->setLatitude($faker->latitude($min = -90, $max = 90));
         $lieu3->setVille($allVilles[rand(0,2)]);
         $manager->persist($lieu3);
         $manager->flush();
