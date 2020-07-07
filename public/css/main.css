@@ -1,3 +1,8 @@
 body{
-    background-color: tomato;
+    background-color: lightgray;
+    opacity: 50%;
+}
+
+#content{
+    background-color: white;
 }
