@@ -1,8 +1,19 @@
-body{
+body {
     background-color: lightgray;
     opacity: 50%;
 }
 
-#content{
+#content {
     background-color: white;
+    margin-top: 2vh;
+    border-radius: 5px;
+}
+
+.nav-item {
+    font-size: large;
+}
+
+#logo {
+    height: 70px;
+    width: auto;
 }
