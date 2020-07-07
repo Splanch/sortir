@@ -12,12 +12,24 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->passwordEncoder=$encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
+
+
         $faker = Faker\Factory::create('fr_FR');
 
         $campus1 = new Campus();
@@ -82,13 +94,18 @@ class AppFixtures extends Fixture
 
         $allLieux = array($lieu1,$lieu2,$lieu3);
         $allParticipants=array();
+
+
+
+
         for ($i = 0; $i < 50; $i++) {
             $participant = new Participant();
             $participant->setNom($faker->firstName);
             $participant->setPrenom($faker->lastName);
             $participant->setTelephone($faker->phoneNumber);
             $participant->setEmail($faker->email);
-            $participant->setPassword($faker->password);
+            $hash = $this->passwordEncoder->encodePassword($participant, "password");
+            $participant->setPassword($hash);
             $participant->setAdministrateur(False);
             $participant->setActif(True);
             $participant->setPseudo($faker->userName);
