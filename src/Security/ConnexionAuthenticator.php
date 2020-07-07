@@ -67,7 +67,7 @@ class ConnexionAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Participant::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(Participant::class)->findOneByIdentifiant($credentials['email']);
 
         if (!$user) {
             // fail authentication with a custom error

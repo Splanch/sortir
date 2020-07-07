@@ -9,7 +9,6 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Participant
-                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -40,3 +39,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
