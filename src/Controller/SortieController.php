@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/recherche/sorties", name="sortie_recherche")
+     * @Route("/", name="sortie_recherche")
      */
     public function recherche()
     {
