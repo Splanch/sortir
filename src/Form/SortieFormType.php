@@ -12,7 +12,13 @@ class SortieFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('field_name')
+            ->add('nom')
+            ->add('dateHeureDebut')
+            ->add('dateLimiteInscription')
+            ->add('nbInscriptionsMax')
+            ->add('duree')
+            ->add('infosSortie')
+            ->add('campus')
         ;
     }
 
