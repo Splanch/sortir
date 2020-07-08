@@ -1,0 +1,19 @@
+{%  extends 'layout.html.twig' %}
+
+{% block main %}
+    {{ form_start(registrationForm, {'attr': {novalidate: 'novalidate'}}) }}
+    <h3 class="form-title">Mon profil</h3>
+    {{ form_row(registrationForm.pseudo) }}
+    {{ form_row(registrationForm.prenom) }}
+    {{ form_row(registrationForm.nom) }}
+    {{ form_row(registrationForm.telephone) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.password, {
+        label: 'Password'
+    }) }}
+
+    <button type="submit" class="btn btn btn-primary">Enregistrer</button>
+    <button type="reset" class="btn btn btn-primary">Annuler</button>
+    {{ form_end(registrationForm) }}
+
+{% endblock %}

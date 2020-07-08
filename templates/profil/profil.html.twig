@@ -1,7 +1,7 @@
 {%  extends 'layout.html.twig' %}
 
 {% block main %}
-    {{ form_start(registrationForm, {'attr': {novalidate: 'novalidate'}}) }}
+    {{ form_start(registrationForm) }}
         <h3 class="form-title">Mon profil</h3>
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.prenom) }}

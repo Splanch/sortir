@@ -10,7 +10,7 @@
 
     <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {'attr': {novalidate: 'novalidate'}}) }}
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.prenom) }}
         {{ form_row(registrationForm.nom) }}
@@ -19,7 +19,11 @@
         {{ form_row(registrationForm.password, {
             label: 'Password'
         }) }}
-
+        {{ form_row(registrationForm.rattacheA, {
+            label: 'Campus'
+        }) }}
+        {{ form_row(registrationForm.administrateur) }}
+        {{ form_row(registrationForm.actif) }}
         <button type="submit" class="btn">Enregistrer</button>
         <button type="reset" class="btn">Annuler</button>
     {{ form_end(registrationForm) }}

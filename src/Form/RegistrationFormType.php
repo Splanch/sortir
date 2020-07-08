@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Entity\Campus;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -15,12 +17,21 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+//Formbuilder différent selon profil admin ou user
         $builder
             ->add('pseudo')
             ->add('prenom')
             ->add('nom')
             ->add('telephone')
             ->add('email')
+            ->add('administrateur')
+            ->add('actif')
+            ->add('rattacheA',EntityType::class,[
+                'class'=>Campus::class,
+                'choice_label'=> function(Campus $campus){
+                    return $campus->getNom();
+                }
+            ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
