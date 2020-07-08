@@ -81,8 +81,6 @@ class AppFixtures extends Fixture
         $lieu2->setVille($allVilles[rand(0,2)]);
         $manager->persist($lieu2);
 
-
-
         $lieu3 = new Lieu();
         $lieu3->setNom('Le Vieux Port');
         $lieu3->setRue($faker->streetName);
