@@ -1,1 +1,32 @@
 {%  extends 'layout.html.twig' %}
+
+{% block main %}
+<div id="date-participant">
+    <h4> Date du jour: {{ "now"|date("d/m/Y") }}</h4>
+    <h4> Participant : {{ app.user.pseudo }}</h4>
+</div>
+
+    <div>
+        <h5>Filtrer les sorties</h5>
+        {{ form_start(rechercheSortieForm) }}
+        {{ form_row(rechercheSortieForm.campus) }}
+        {{ form_row(rechercheSortieForm.keywords) }}
+        <div id="dates-recherche-sortie">
+            {{ form_row(rechercheSortieForm.dateDebut) }}
+            {{ form_row(rechercheSortieForm.dateFin)}}
+        </div>
+        <div id="checkbox-recherche-sortie">
+            {{ form_row(rechercheSortieForm.organiseesParMoi) }}
+            {{ form_row(rechercheSortieForm.jeSuisInscrit) }}
+            {{ form_row(rechercheSortieForm.nonInscrit) }}
+            {{ form_row(rechercheSortieForm.sortiesPassees) }}
+        </div>
+        {{ form_end(rechercheSortieForm) }}
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
