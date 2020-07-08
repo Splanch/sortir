@@ -27,6 +27,7 @@ class Participant implements UserInterface
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Email(message="Le format de l'adresse email est incorrect !")
      * @Assert\Length(min="10",max="180",minMessage="Votre email est trop court !",maxMessage="Votre email est trop long !")
      * @ORM\Column(type="string", length=180, unique=true)
      */
@@ -60,6 +61,7 @@ class Participant implements UserInterface
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Regex("#^((\+)33|0)[1-9](\d{2}){4}$#",message="Le numéro de téléphone doit être au format français !")
      * @Assert\Length(min="2",max="20",minMessage="Votre numéro de téléphone est trop court !",maxMessage="Votre numéro de téléphone est trop long !")
      * @ORM\Column(type="string", length=255)
      */
