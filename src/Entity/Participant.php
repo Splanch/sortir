@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte existe déjà associé à cette adresse mail !")
  */
 class Participant implements UserInterface
 {
@@ -24,6 +25,8 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="10",max="180",minMessage="Votre email est trop court !",maxMessage="Votre email est trop long !")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -36,20 +39,27 @@ class Participant implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min=6,minMessage="Le mot de passe est trop court !", max=50,maxMessage="Le mot de passe est trop long !")
      */
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="3",max="180",minMessage="Votre nom est trop court !",maxMessage="Votre nom est trop long !")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2",max="180",minMessage="Votre prénom est trop court !",maxMessage="Votre prénom est trop long !")
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2",max="20",minMessage="Votre numéro de téléphone est trop court !",maxMessage="Votre numéro de téléphone est trop long !")
      * @ORM\Column(type="string", length=255)
      */
     private $telephone;
@@ -81,6 +91,9 @@ class Participant implements UserInterface
     private $rattacheA;
 
     /**
+//     * @Assert\NotBlank(message="Ce champ est obligatoire !")
+//     * @Assert\Unique(message="Ce pseudo est déjà utilisé !")
+//     * @Assert\Length(min="10",minMessage="Ce pseudo est trop court",max="50",maxMessage="Ce pseudo est trop long !")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $pseudo;
