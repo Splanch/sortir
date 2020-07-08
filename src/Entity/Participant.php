@@ -39,7 +39,6 @@ class Participant implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Length(min=6,minMessage="Le mot de passe est trop court !", max=50,maxMessage="Le mot de passe est trop long !")
      */
     private $password;
 
@@ -91,9 +90,7 @@ class Participant implements UserInterface
     private $rattacheA;
 
     /**
-//     * @Assert\NotBlank(message="Ce champ est obligatoire !")
-//     * @Assert\Unique(message="Ce pseudo est déjà utilisé !")
-//     * @Assert\Length(min="10",minMessage="Ce pseudo est trop court",max="50",maxMessage="Ce pseudo est trop long !")
+     * @Assert\Length(min="10",minMessage="Ce pseudo est trop court",max="50",maxMessage="Ce pseudo est trop long !")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $pseudo;
