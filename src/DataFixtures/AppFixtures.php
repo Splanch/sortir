@@ -106,7 +106,14 @@ class AppFixtures extends Fixture
             $participant->setPassword($hash);
             $participant->setAdministrateur(False);
             $participant->setActif(True);
-            $participant->setRoles(array('ROLE_USER'));
+            if ($i%2 === 0)
+            {
+                $participant->setRoles(array('ROLE_USER'));
+            }
+            else
+            {
+                $participant->setRoles(array('ROLE_ADMIN'));
+            }
             $participant->setPseudo($faker->userName);
             $participant->setRattacheA($allCampus[rand(0,2)]);
             $manager->persist($participant);

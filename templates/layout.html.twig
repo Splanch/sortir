@@ -30,9 +30,9 @@
                             <a class="nav-link" href="#">Campus</a>
                         </li>
                     {% endif %}
-                    <li class="nav-item mr-sm-2">
-                        <a class="nav-link" href="{{ path('sortie_recherche') }}">Accueil</a>
-                    </li>
+                        <li class="nav-item mr-sm-2">
+                            <a class="nav-link" href="{{ path('sortie_recherche') }}">Accueil</a>
+                        </li>
                     {% if is_granted('ROLE_USER') %}
                         <li class="nav-item mr-sm-2">
                             <a class="nav-link" href="{{ path('profil_mon_profil', {'id':app.user.id}) }}">Mon Profil</a>
@@ -40,7 +40,7 @@
                         <li class="nav-item mr-sm-2">
                             <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                         </li>
-                    {% else%}
+                    {% else %}
                         <li class="nav-item mr-sm-2">
                             <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
                         </li>
