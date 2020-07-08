@@ -17,3 +17,23 @@ body {
     height: 70px;
     width: auto;
 }
+
+form{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+.form-title{
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.btn-primary{
+    background-color: #f9a927 ;
+    border : none;
+
+}
+
+.btn-primary:hover{
+    background-color: #ff8e0a;
+}

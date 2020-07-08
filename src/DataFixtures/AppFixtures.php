@@ -100,8 +100,8 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 50; $i++) {
             $participant = new Participant();
-            $participant->setNom($faker->firstName);
-            $participant->setPrenom($faker->lastName);
+            $participant->setNom($faker->lastName);
+            $participant->setPrenom($faker->firstName);
             $participant->setTelephone($faker->phoneNumber);
             $participant->setEmail($faker->email);
             $hash = $this->passwordEncoder->encodePassword($participant, "password");

@@ -18,29 +18,32 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil_mon_profil")
      */
-    public function monprofil(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function monprofil($id,Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = new Participant();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $repo = $this->getDoctrine()->getRepository(Participant::class);
+        $user= $repo->find($id);
+        if(!$user){
+            return $this->render('security/login.html.twig',[]);
+        }else {
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success','Votre profil a été modifié.');
 
-            return $this->redirectToRoute('app_login');
+           }
         }
-
         return $this->render('profil/profil.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
