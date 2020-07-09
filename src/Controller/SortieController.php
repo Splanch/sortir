@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Sortie;
+use App\Form\RechercheSortieType;
+use App\Form\SortieFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,7 +18,7 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/recherche.html.twig', [
             'controller_name' => 'SortieController',
-        ]);
+            ]);
     }
 
     /**
@@ -22,8 +26,16 @@ class SortieController extends AbstractController
      */
     public function create()
     {
-        return $this->render('sortie/sortie.html.twig', [
+        $sortie=new Sortie();
+        $organisateur = $this->getUser();
+        $sortie->setOrganisateur($organisateur);
+        $sortie->setCampus($organisateur->getRattacheA());
+
+        $form = $this->createForm(SortieFormType::class,$sortie);
+
+        return $this->render('sortie/creerSortie.html.twig', [
             'controller_name' => 'SortieController',
+            'creerSortie'=>$form->createView(),
         ]);
     }
 
