@@ -1,7 +1,41 @@
 {%  extends 'layout.html.twig' %}
 
 {% block main %}
-    {{ form_start(registrationForm) }}
+    {% if affichage %}
+        <h3 class="text-center mt-3">{{ user.pseudo }}</h3>
+        <div class="pb-4 row">
+            <div class="float-left col-sm-2">
+                <img src="" alt="logo profil">
+            </div>
+            <div class="float-right col-sm-10">
+               <p class="row">
+                   <span class="col-sm-2">Prénom : </span>
+                   <span class="col-sm-10">{{ user.prenom }}</span>
+               </p>
+                <p class="row">
+                    <span class="col-sm-2">Nom : </span>
+                    <span class="col-sm-10">{{ user.nom }}</span>
+               </p>
+                <p class="row">
+                    <span class="col-sm-2">Téléphone : </span>
+                    <span class="col-sm-10">{{ user.telephone }}</span>
+               </p>
+                <p class="row" >
+                    <span class="col-sm-2">Email : </span>
+                    <span class="col-sm-10">{{ user.email }}</span>
+               </p>
+                <p class="row">
+                    <span class="col-sm-2">Campus : </span>
+                    <span class="col-sm-10">{{ user.rattacheA.nom }}</span>
+               </p>
+            </div>
+            <div class="mb-5 clearfix"></div>
+        </div>
+
+        <a class="btn btn-primary d-block m-auto w-25 mb-5" href="javascript:history.back()">Retour</a>
+
+    {% else %}
+        {{ form_start(registrationForm) }}
         <h3 class="form-title">Mon profil</h3>
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.prenom) }}
@@ -12,8 +46,9 @@
             label: 'Password'
         }) }}
 
-        <button type="submit" class="btn btn btn-primary">Enregistrer</button>
-        <button type="reset" class="btn btn btn-primary">Annuler</button>
-    {{ form_end(registrationForm) }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="reset" class="btn btn-primary">Annuler</button>
+        {{ form_end(registrationForm) }}
+    {% endif %}
 
 {% endblock %}

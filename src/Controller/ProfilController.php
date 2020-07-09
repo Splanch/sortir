@@ -18,7 +18,7 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil_mon_profil")
      */
-    public function monprofil($id,Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function monprofil($id,$affichage = false, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $repo = $this->getDoctrine()->getRepository(Participant::class);
         $user= $repo->find($id);
@@ -41,22 +41,29 @@ class ProfilController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->addFlash('success','Votre profil a été modifié.');
-
            }
         }
         return $this->render('profil/profil.html.twig', [
             'registrationForm' => $form->createView(),
+            'affichage' => $affichage,
         ]);
     }
 
     /**
      * @Route("/profil/detail/{id}", name="profil_afficher")
      */
-    public function afficherprofil()
+    public function afficherprofil($id,$affichage = true, Request $request)
     {
+
+        $repo = $this->getDoctrine()->getRepository(Participant::class);
+        $user = $repo->find($id);
+
+
         return $this->render('profil/profil.html.twig', [
-            'controller_name' => 'ProfilController',
+            'user' => $user,
+            'affichage' => $affichage,
         ]);
+
     }
 
 
