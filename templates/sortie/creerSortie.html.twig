@@ -16,9 +16,9 @@
     {{ form_row(creerSortie.codePostal) }}
     {{ form_row(creerSortie.latitude) }}
     {{ form_row(creerSortie.longitude) }}
-    {{ form_row(creerSortie.enregister) }}
+    {{ form_row(creerSortie.enregistrer) }}
     {{ form_row(creerSortie.publier) }}
-    {{ form_row(creerSortie.annuler) }}
+   <a href="{{ path('sortie_recherche') }}"> {{ form_row(creerSortie.annuler) }}</a>
     {{ form_end(creerSortie) }}
 
 

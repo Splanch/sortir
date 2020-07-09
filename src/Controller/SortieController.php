@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\RechercheSortieType;
+use App\Form\SortieFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,10 +44,39 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/creer", name="sortie_creer")
      */
-    public function create()
+    public function create(Request $request) :Response
     {
-        return $this->render('sortie/sortie.html.twig', [
+        $sortie = new Sortie();
+        $organisateur=$this->getUser();
+
+        $form=$this->createForm(SortieFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $sortie=$form->getData();
+
+            $sortie->setOrganisateur($organisateur);
+            $sortie->setCampus($organisateur->getRattacheA());
+            $repoEtat=$this->getDoctrine()->getRepository(Etat::class);
+            if($form->get('enregistrer')->isClicked()) {
+                $etat = $repoEtat->findOneByLibelle('En création');
+            }
+            if($form->get('publier')->isClicked()){
+                $etat = $repoEtat->findOneByLibelle('Ouverte');
+            }
+            $sortie->setEtat($etat);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sortie);
+            $em->flush();
+            return $this->redirectToRoute('sortie_recherche');
+
+        }
+
+
+        return $this->render('sortie/creerSortie.html.twig', [
             'controller_name' => 'SortieController',
+            'creerSortie'=>$form->createView(),
         ]);
     }
 
