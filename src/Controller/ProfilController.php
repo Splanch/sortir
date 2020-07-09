@@ -23,7 +23,7 @@ class ProfilController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Participant::class);
         $user= $repo->find($id);
         if(!$user){
-            return $this->render('security/login.html.twig',[]);
+            return $this->render('security/login.html.twig');
         }else {
             $form = $this->createForm(RegistrationFormType::class, $user,['userConnecte'=>$this->getUser()]);
             $form->handleRequest($request);
