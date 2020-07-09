@@ -8,7 +8,7 @@
 
     <div>
         <h5>Filtrer les sorties</h5>
-        {{ form_start(rechercheSortieForm) }}
+        {{ form_start(rechercheSortieForm,{'attr': {novalidate : 'novalidate'}}) }}
         {{ form_row(rechercheSortieForm.campus) }}
         {{ form_row(rechercheSortieForm.keywords) }}
         <div id="dates-recherche-sortie">
@@ -21,8 +21,8 @@
             {{ form_row(rechercheSortieForm.nonInscrit) }}
             {{ form_row(rechercheSortieForm.sortiesPassees) }}
         </div>
-        <button type="submit" class="btn btn btn-primary">Rechercher</button>
-        <button type="reset" class="btn btn btn-primary">Annuler</button>
+
+
         {{ form_end(rechercheSortieForm) }}
     </div>
 

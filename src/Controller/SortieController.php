@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 
+use App\Entity\Sortie;
 use App\Form\RechercheSortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
@@ -15,19 +16,26 @@ class SortieController extends AbstractController
     /**
      * @Route("/", name="sortie_recherche")
      */
-    public function recherche(Request $request)
+    public function recherche(Request $request):Response
     {
         $user=$this-> getUser();
         if(!$user){
             return $this-> redirectToRoute('app_login');
         }
         $form=$this->createForm(RechercheSortieType::class);
+        $form->handleRequest($request);
+       if ($form->isSubmitted()) {
+            $searchParameters= $form->getData();
+            dump($searchParameters);
 
-
-
+           $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+           $sorties= $sortieRepo->findSortieParametre($user,$searchParameters);
+           dump($sorties);
+       }
 
         return $this->render('sortie/recherche.html.twig', [
         'rechercheSortieForm'=>$form->createView(),
+        //'sorties'=>$sorties
         ]);
     }
 
