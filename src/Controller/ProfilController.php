@@ -25,7 +25,7 @@ class ProfilController extends AbstractController
         if(!$user){
             return $this->render('security/login.html.twig',[]);
         }else {
-            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form = $this->createForm(RegistrationFormType::class, $user,['userConnecte'=>$this->getUser()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

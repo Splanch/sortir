@@ -8,30 +8,25 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function MongoDB\Driver\Monitoring\removeSubscriber;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 //Formbuilder différent selon profil admin ou user
+
         $builder
             ->add('pseudo')
             ->add('prenom')
             ->add('nom')
             ->add('telephone')
             ->add('email')
-            ->add('administrateur')
-            ->add('actif')
-            ->add('rattacheA',EntityType::class,[
-                'class'=>Campus::class,
-                'choice_label'=> function(Campus $campus){
-                    return $campus->getNom();
-                }
-            ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -71,13 +66,28 @@ class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => 'Confirmation'],
             ]);
 
-        ;
+
+
+        if($options['userConnecte']->getRoles()[0] == 'ROLE_ADMIN'){
+            $builder
+
+                ->add('administrateur')
+                ->add('actif')
+                ->add('rattacheA',EntityType::class,[
+                    'class'=>Campus::class,
+                    'choice_label'=> function(Campus $campus){
+                        return $campus->getNom();
+                    }
+                ])   ;
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Participant::class,
+            'userConnecte' => null,
         ]);
     }
 }
