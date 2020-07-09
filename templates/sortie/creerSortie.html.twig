@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    {{ form_start(creerSortie) }}
+        {{ form_row(creerSortie.nom) }}
+    {{ form_row(creerSortie.dateHeureDebut) }}
+    {{ form_row(creerSortie.dateLimiteInscription) }}
+    {{ form_row(creerSortie.nbInscriptionsMax) }}
+    {{ form_row(creerSortie.duree) }}
+    {{ form_row(creerSortie.infosSortie) }}
+    {{ form_row(creerSortie.campus, {'value':app.user.getNomCampus}) }}
+    {{ form_row(creerSortie.ville) }}
+    {{ form_row(creerSortie.lieu) }}
+    {{ form_row(creerSortie.rue) }}
+    {{ form_row(creerSortie.codePostal) }}
+    {{ form_row(creerSortie.latitude) }}
+    {{ form_row(creerSortie.longitude) }}
+    {{ form_row(creerSortie.enregister) }}
+    {{ form_row(creerSortie.publier) }}
+    {{ form_row(creerSortie.annuler) }}
+    {{ form_end(creerSortie) }}
+
+
+
+{% endblock %}

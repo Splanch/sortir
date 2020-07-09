@@ -104,15 +104,16 @@ class AppFixtures extends Fixture
             $participant->setEmail($faker->email);
             $hash = $this->passwordEncoder->encodePassword($participant, "password");
             $participant->setPassword($hash);
-            $participant->setAdministrateur(False);
             $participant->setActif(True);
             if ($i%2 === 0)
             {
                 $participant->setRoles(array('ROLE_USER'));
+                $participant->setAdministrateur(False);
             }
             else
             {
                 $participant->setRoles(array('ROLE_ADMIN'));
+                $participant->setAdministrateur(True);
             }
             $participant->setPseudo($faker->userName);
             $participant->setRattacheA($allCampus[rand(0,2)]);

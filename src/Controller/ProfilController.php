@@ -23,9 +23,9 @@ class ProfilController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Participant::class);
         $user= $repo->find($id);
         if(!$user){
-            return $this->render('security/login.html.twig',[]);
+            return $this->render('security/login.html.twig');
         }else {
-            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form = $this->createForm(RegistrationFormType::class, $user,['userConnecte'=>$this->getUser()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -36,6 +36,13 @@ class ProfilController extends AbstractController
                         $form->get('password')->getData()
                     )
                 );
+
+                if($form->getData()->getAdministrateur())
+                {
+                    $user->setRoles(array('ROLE_ADMIN'));
+                } else {
+                    $user->setRoles(array('ROLE_USER'));
+                }
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);

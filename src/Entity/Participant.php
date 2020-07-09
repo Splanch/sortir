@@ -101,10 +101,16 @@ class Participant implements UserInterface
     private $pseudo;
 
 
+
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
         $this->inscription = new ArrayCollection();
+    }
+
+    public function getNomCampus(){
+        return $this->getRattacheA()->getNom();
     }
 
     public function getId(): ?int

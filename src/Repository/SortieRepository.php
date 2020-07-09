@@ -19,32 +19,39 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Sortie
+ /*   public function findSortie(Participant $userConnecte)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+
+        $qb = $this->createQueryBuilder('s');
+        $qb->andWhere($userConnecte ==='s.organisateur');
+        $qb->join('s.etat', 'e');
+        $qb->addSelect('e');
+        $query=$qb->getQuery();
+        $sorties = $query->getResult();
+
+        return $sorties;
     }
-    */
+ */
+
+
+
+    public function findSortieParametre($user,$searchParameters): ?array
+    {
+        $result=$this->createQueryBuilder('s');
+
+        if ($searchParameters['organiseesParMoi']) {
+            $result=$result->andWhere('s.organisateur = :val')
+                ->setParameter('val', $user)
+                ->join('s.etat', 'e')
+                ->addSelect('e')
+                ->join('s.participants', 'p')
+                ->addSelect('p')
+                ->getQuery()
+                ->getArrayResult();
+        }
+         return $result;
+    }
+
 }
