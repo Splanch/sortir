@@ -13,10 +13,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class RechercheSortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $aujourdhui = new DateTime();
+        $dansUnMois = new DateTime();
+
         $builder
             ->add('campus', EntityType::class, [
                 'class'=>Campus::class,
@@ -30,13 +34,13 @@ class RechercheSortieType extends AbstractType
             ->add('dateDebut',DateType::class,[
                 'format'=>'dd MM yyyy',
                 'label'=> 'Entre',
-                'data' => new DateTime (),
+                'data' => $aujourdhui,
 
             ])
             ->add('dateFin',DateType::class,[
                 'format'=>'dd MM yyyy',
                 'label'=> 'et',
-                'data' => new DateTime()
+                'data' => $dansUnMois->modify('+1 month')
             ])
             ->add('organiseesParMoi', CheckboxType::class,[
                 'label'=> 'Sorties organisées par moi',
