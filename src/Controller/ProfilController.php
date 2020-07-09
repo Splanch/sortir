@@ -37,6 +37,13 @@ class ProfilController extends AbstractController
                     )
                 );
 
+                if($form->getData()->getAdministrateur())
+                {
+                    $user->setRoles(array('ROLE_ADMIN'));
+                } else {
+                    $user->setRoles(array('ROLE_USER'));
+                }
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

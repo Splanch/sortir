@@ -11,8 +11,21 @@
         {{ form_row(registrationForm.password, {
             label: 'Password'
         }) }}
+
+        {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+            {{ form_row(registrationForm.rattacheA, {
+                label: 'Campus'
+            }) }}
+            {{ form_row(registrationForm.administrateur) }}
+            {{ form_row(registrationForm.actif) }}
+        {% endif %}
+
+
         <button type="submit" class="btn btn btn-primary">Enregistrer</button>
         <button type="reset" class="btn btn btn-primary">Annuler</button>
     {{ form_end(registrationForm) }}
+
+
+
 
 {% endblock %}
