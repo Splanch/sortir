@@ -18,7 +18,8 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new Participant();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $userConnecte=$this->getUser();
+        $form = $this->createForm(RegistrationFormType::class, $user, array('userConnecte'=>$userConnecte));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -26,7 +27,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 

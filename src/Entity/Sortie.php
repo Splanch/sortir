@@ -78,6 +78,8 @@ class Sortie
      */
     private $lieu;
 
+
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
