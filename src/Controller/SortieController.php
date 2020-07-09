@@ -44,7 +44,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/creer", name="sortie_creer")
      */
-    public function createSortie(Request $request) :Response
+    public function create(Request $request) :Response
     {
         $sortie = new Sortie();
         $organisateur=$this->getUser();
@@ -53,7 +53,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            
+
             $sortie=$form->getData();
 
             $sortie->setOrganisateur($organisateur);
