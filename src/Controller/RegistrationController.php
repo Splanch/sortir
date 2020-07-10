@@ -42,6 +42,7 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success','Le nouvel utilisateur a été créé !');
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_register');

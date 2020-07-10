@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+{% block main %}
+    <h3 class="text-center mt-3">Annuler une sortie</h3>
+    <div class="pb-4 row">
+        <div class="float-right col-sm-10">
+            <p class="row">
+                <span class="col-sm-4">Nom de la sortie : </span>
+                <span class="col-sm-8">{{ sortieInfos.nom }}</span>
+            </p>
+            <p class="row">
+                <span class="col-sm-4">Date de la sortie : </span>
+                <span class="col-sm-8">{{ sortieInfos.dateHeureDebut | date("d/m/Y \t H:i") }}</span>
+            </p>
+            <p class="row">
+                <span class="col-sm-4">Campus : </span>
+                <span class="col-sm-8">{{ sortieInfos.campus.nom }}</span>
+            </p>
+            <p class="row" >
+                <span class="col-sm-4">Lieu : </span>
+                <span class="col-sm-8">{{ sortieInfos.lieu.nom }}</span>
+            </p>
+            {{ form_start(annulerSortie) }}
+            {{ form_row(annulerSortie.motifAnnulation, {
+                label: 'Motif d\'annulation :'
+            }) }}
+            {{ form_end(annulerSortie) }}
+
+        </div>
+        <div class="mb-5 clearfix"></div>
+    </div>
+    <a class="btn btn-primary d-block m-auto w-25 mb-5" href="javascript:history.back()">Retour</a>
+{% endblock %}

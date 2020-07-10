@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\RechercheSortieType;
 use App\Form\SortieFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -103,10 +104,20 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/cancel/{id}", name="sortie_annuler")
      */
-    public function annuler()
+    public function annuler($id, Request $request) :Response
     {
-        return $this->render('sortie/annuler.html.twig', [
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortieInfos= $sortieRepo->find($id);
+
+        $sortie = new Sortie();
+
+        $form=$this->createForm(AnnulerSortieType::class);
+//        $form->handleRequest($request);
+
+        return $this->render('sortie/annulerSortie.html.twig', [
             'controller_name' => 'SortieController',
+            'annulerSortie'=>$form->createView(),
+            'sortieInfos'=>$sortieInfos,
         ]);
     }
 }
