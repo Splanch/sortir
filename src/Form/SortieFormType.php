@@ -78,7 +78,9 @@ class SortieFormType extends AbstractType
 
             ])
             ->add('publier',SubmitType::class)
-            ->add('annuler',ButtonType::class)
+            ->add('annuler',ButtonType::class,[
+                'attr'=>['onclick'=>'location.href="/sortir/public/"']
+            ])
         ;
 
 

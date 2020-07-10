@@ -7,6 +7,7 @@ body {
     background-color: white;
     margin-top: 2vh;
     border-radius: 5px;
+    margin-bottom: 2vh;
 }
 
 .nav-item {
@@ -36,4 +37,28 @@ form{
 
 .btn-primary:hover{
     background-color: #ff8e0a;
+}
+
+#searchSortiesResult{
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 3vh;
+
+}
+#searchSortiesResult thead th{
+    position:sticky;
+    top:0;
+}
+
+#btn-creer-sortie{
+    padding-bottom: 2vh;
+}
+
+footer{
+    height: 5vh;
+    background-color: #222222;
+}
+
+footer p{
+    color: #e0e0e0;
 }
