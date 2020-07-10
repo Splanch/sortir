@@ -26,6 +26,7 @@ class RechercheSortieType extends AbstractType
                 'class'=>Campus::class,
                 'choice_label'=>function(Campus $campus){
                 return $campus->getNom();
+
                 }
             ])
             ->add('keywords', SearchType::class,[
