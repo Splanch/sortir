@@ -24,6 +24,7 @@
 
 
         {{ form_end(rechercheSortieForm) }}
+
     </section>
 
     <section id="affichage-sorties">
@@ -60,12 +61,13 @@
             {% endif %}
 
         </table>
+       </div>
+        <section id="btn-creer-sortie">
+            <button class="btn btn-primary btn-lg" onclick="location.href='{{ path('sortie_creer') }}';">Créer une sortie</button>
+        </section>
+    </section>
 
-    </section>
-    <section id="btn-creer-sortie">
-        <button class="btn btn-primary btn-lg" onclick="location.href='{{ path('sortie_creer') }}';">Créer une sortie</button>
-    </section>
-    </div>
+
 
 {% endblock %}
 
