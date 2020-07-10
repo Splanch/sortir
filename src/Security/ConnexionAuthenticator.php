@@ -74,6 +74,10 @@ class ConnexionAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Email ou mot de passe invalide');
         }
 
+        if (!$user->getActif()){
+            throw new CustomUserMessageAuthenticationException('Compte inactif');
+        }
+
 
         return $user;
     }
@@ -93,7 +97,6 @@ class ConnexionAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

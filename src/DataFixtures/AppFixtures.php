@@ -316,7 +316,7 @@ class AppFixtures extends Fixture
         $sortie10->setDateLimiteInscription($finInscription->modify('-45 day'));
         $sortie10->setNbInscriptionsMax(10);
         $sortie10->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
-        $sortie10->setEtat($annulee);
+        $sortie10->setEtat($historisee);
         $sortie10->setOrganisateur($allParticipants[rand(0,sizeof($allParticipants)-1)]);
         $sortie10->setLieu($allLieux[rand(0,sizeof($allLieux)-1)]);
         $sortie10->setCampus($allCampus[rand(0,sizeof($allCampus)-1)]);

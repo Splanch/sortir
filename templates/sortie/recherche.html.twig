@@ -24,7 +24,51 @@
 
 
         {{ form_end(rechercheSortieForm) }}
+
     </div>
+
+    <div id="affichage-sorties">
+        {% if (sorties is empty) %}
+            <h3 class="text-center"> Pas de sorties trouvées</h3>
+        {% else %}
+        <div id="searchSortiesResult" class="table-responsive">
+        <table  class="table table-sm table-striped table-light">
+            <thead class="thead-dark ">
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">inscrits/places</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateurs</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{sortie.nom | lower |capitalize}}</td>
+                        <td>{{ sortie.dateHeureDebut | date("d/m/Y") }}</td>
+                        <td>{{ sortie.dateLimiteInscription | date("d/m/Y")  }}</td>
+                        <td>{{ sortie.participants |length }}/{{ sortie.nbInscriptionsMax }}</td>
+                        <td></td>
+                        <td>{{ sortie.organisateur.id }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+
+        </table>
+        </div>
+        <div id="btn-creer-sortie">
+            <button class="btn btn-primary btn-lg" onclick="location.href='{{ path('sortie_creer') }}';">Créer une sortie</button>
+        </div>
+       </div>
+
+
+
 
 
 {% endblock %}
