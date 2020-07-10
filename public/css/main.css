@@ -1,6 +1,6 @@
 body {
     background-color: lightgray;
-    height:100%;
+
 }
 
 #content {
@@ -57,5 +57,14 @@ form{
     margin-bottom: 1vh;
 }
 
+#nomSortie{
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-
+.table-hover tbody tr:hover
+{
+   background-color: #f9a927 ;
+}
