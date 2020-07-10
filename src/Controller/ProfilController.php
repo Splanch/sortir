@@ -14,18 +14,17 @@ class ProfilController extends AbstractController
 {
 
 
-
     /**
      * @Route("/profil/{id}", name="profil_mon_profil")
      */
-    public function monprofil($id,$affichage = false, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function monprofil($id, $affichage = false, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $repo = $this->getDoctrine()->getRepository(Participant::class);
-        $user= $repo->find($id);
-        if(!$user){
+        $user = $repo->find($id);
+        if (!$user) {
             return $this->render('security/login.html.twig');
-        }else {
-            $form = $this->createForm(RegistrationFormType::class, $user,['userConnecte'=>$this->getUser()]);
+        } else {
+            $form = $this->createForm(RegistrationFormType::class, $user, ['userConnecte' => $this->getUser()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -37,8 +36,7 @@ class ProfilController extends AbstractController
                     )
                 );
 
-                if($form->getData()->getAdministrateur())
-                {
+                if ($form->getData()->getAdministrateur()) {
                     $user->setRoles(array('ROLE_ADMIN'));
                 } else {
                     $user->setRoles(array('ROLE_USER'));
@@ -47,8 +45,8 @@ class ProfilController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->addFlash('success','Votre profil a été modifié.');
-           }
+                $this->addFlash('success', 'Votre profil a été modifié.');
+            }
         }
         return $this->render('profil/profil.html.twig', [
             'registrationForm' => $form->createView(),
@@ -59,7 +57,7 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/detail/{id}", name="profil_afficher")
      */
-    public function afficherprofil($id,$affichage = true, Request $request)
+    public function afficherprofil($id, $affichage = true, Request $request)
     {
 
         $repo = $this->getDoctrine()->getRepository(Participant::class);
