@@ -111,10 +111,18 @@ class SortieController extends AbstractController
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortieInfos= $sortieRepo->find($id);
 
-        $sortie = new Sortie();
-
         $form=$this->createForm(AnnulerSortieType::class);
-//        $form->handleRequest($request);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $sortieInfos->setMotifAnnulation($sortie=$form->getData()->getMotifAnnulation());
+            $majInfo = $sortieRepo->findOneById($sortieInfos->getId());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($majInfo);
+            $em->flush();
+            $this->addFlash('success','La sortie a été annulée !');
+            return $this->redirectToRoute('sortie_recherche');
+        }
 
         return $this->render('sortie/annulerSortie.html.twig', [
             'controller_name' => 'SortieController',
