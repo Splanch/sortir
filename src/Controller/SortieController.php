@@ -90,9 +90,11 @@ class SortieController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortieInfos = $repo->find($id);
+        dump($sortieInfos);
 
         return $this->render('sortie/detailSortie.html.twig', [
             'controller_name' => 'SortieController',
+            'sortieInfos'=>$sortieInfos,
         ]);
     }
 

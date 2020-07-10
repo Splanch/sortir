@@ -2,6 +2,54 @@
 
 {% block main %}
 
+<h3>Afficher une sortie</h3>
+
+<div id="sortie-infos" >
+    <div>Nom de la sortie : </div><div>{{ sortieInfos.nom  }}</div>
+    <div>Date et heure de la sortie : </div><div>{{ sortieInfos.dateHeureDebut | date('d/m/Y h:i') }}</div>
+    <div>Date limite d'inscription</div><div>{{ sortieInfos.dateLimiteInscription| date('d/m/Y h:i ') }}</div>
+    <div>Nombre de places : </div><div>{{ sortieInfos.nbInscriptionsMax }}</div>
+    <div>Duree : </div><div>{{ sortieInfos.duree }} minutes</div>
+    <div>Description et infos : </div><div>{{ sortieInfos.infosSortie }}</div>
+    <div>Campus : </div><div>{{ sortieInfos.campus.nom }}</div>
+    <div>Lieu : </div><div>{{ sortieInfos.lieu.nom }}</div>
+    <div>Rue : </div><div>{{ sortieInfos.lieu.rue }}</div>
+    <div>Code Postal : </div><div>{{ sortieInfos.lieu.ville.codePostal }}</div>
+    <div>Latitude</div><div>{{ sortieInfos.lieu.latitude }}</div>
+    <div>Longitude</div><div>{{ sortieInfos.lieu.longitude }}</div>
+</div>
+<div id="liste-participants">
+    <h4>Liste des participants Inscrits</h4>
+    {% if sortieInfos.participants is empty %}
+    <p> Il n'y a encore personne d'incrit bouhouhou !</p>
+    {% else %}
+    <div class="table-responsive tableResult">
+        <table class="table table-sm table-hover table-striped table-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for participant in sortieInfos.participants %}
+                <tr>
+                    <td>{{ participant.pseudo }}</td>
+                    <td>{{ participant.prenom }} {{ participant.nom |upper }}</td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+    {% endif %}
+
+</div>
+
+
 {% endblock %}
 
 {% block script %}

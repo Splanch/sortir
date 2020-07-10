@@ -41,13 +41,13 @@ form{
     background-color: #ff8e0a;
 }
 
-#searchSortiesResult{
+.tableResult{
     max-height: 300px;
     overflow-y: auto;
     margin-bottom: 3vh;
 
 }
-#searchSortiesResult thead th{
+.tableResult thead th{
     position:sticky;
     top:0;
 }
@@ -58,7 +58,7 @@ form{
 }
 
 #nomSortie{
-    max-width: 200px;
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

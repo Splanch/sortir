@@ -31,9 +31,9 @@
         {% if (sorties is empty) %}
             <h3 class="text-center"> Pas de sorties trouvées</h3>
         {% else %}
-        <div id="searchSortiesResult" class="table-responsive">
+        <div  class="table-responsive tableResult">
         <table  class="table table-sm table-hover table-striped table-light">
-            <thead class="thead-dark ">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">Nom de la sortie</th>
                     <th scope="col">Date de la sortie</th>
@@ -59,8 +59,25 @@
                              {% endif %}
                             {% endfor %}
                         </td>
-                        <td>{{ sortie.organisateur.pseudo }}</td>
-                        <td></td>
+                        <td><a href="{{ path('profil_afficher', {'id': sortie.organisateur.id}) }}" title="{{sortie.organisateur.pseudo}}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td>
+                            {% if (sortie.etat.libelle == 'En création') and (app.user.id == sortie.organisateur.id) %}
+                                Modifier - Publier
+                            {% else %}
+                            <a href="{{ path('sortie_afficher',{'id':sortie.id}) }}">Afficher</a>
+                            {% for participant in sortie.participants %}
+                                {% if (app.user.id == participant.id) %}
+                                    - Se désister
+                                {% elseif (app.user.id == sortie.organisateur.id)%}
+                                    - Annuler
+
+                                {% endif %}
+                            {% endfor %}
+                                {% if  sortie.etat.libelle == 'Ouverte'%}
+                                    - S'inscrire
+                                    {% endif %}
+                            {% endif %}
+                            </td>
                     </tr>
                 {% endfor %}
             </tbody>
