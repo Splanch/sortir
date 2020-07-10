@@ -1,6 +1,6 @@
 body {
     background-color: lightgray;
-
+    height:100%;
 }
 
 #content {
@@ -8,6 +8,8 @@ body {
     margin-top: 2vh;
     border-radius: 5px;
     margin-bottom: 2vh;
+    height: 100%;
+
 }
 
 .nav-item {
@@ -52,13 +54,8 @@ form{
 
 #btn-creer-sortie{
     padding-bottom: 2vh;
+    margin-bottom: 1vh;
 }
 
-footer{
-    height: 5vh;
-    background-color: #222222;
-}
 
-footer p{
-    color: #e0e0e0;
-}
+
