@@ -8,6 +8,8 @@ body {
     margin-top: 2vh;
     border-radius: 5px;
     margin-bottom: 2vh;
+    height: 100%;
+
 }
 
 .nav-item {
@@ -52,13 +54,17 @@ form{
 
 #btn-creer-sortie{
     padding-bottom: 2vh;
+    margin-bottom: 1vh;
 }
 
-footer{
-    height: 5vh;
-    background-color: #222222;
+#nomSortie{
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-footer p{
-    color: #e0e0e0;
+.table-hover tbody tr:hover
+{
+   background-color: #f9a927 ;
 }
