@@ -1,12 +1,12 @@
 {%  extends 'layout.html.twig' %}
 
 {% block main %}
-<section id="date-participant">
+<div id="date-participant">
     <h4> Date du jour: {{ "now"|date("d/m/Y") }}</h4>
     <h4> Participant : {{ app.user.pseudo }}</h4>
-</section>
+</div>
 
-    <section>
+    <div>
         <h5>Filtrer les sorties</h5>
         {{ form_start(rechercheSortieForm,{'attr': {novalidate : 'novalidate'}}) }}
         {{ form_row(rechercheSortieForm.campus) }}
@@ -25,9 +25,9 @@
 
         {{ form_end(rechercheSortieForm) }}
 
-    </section>
+    </div>
 
-    <section id="affichage-sorties">
+    <div id="affichage-sorties">
         {% if (sorties is empty) %}
             <h3 class="text-center"> Pas de sorties trouvées</h3>
         {% else %}
@@ -61,11 +61,13 @@
             {% endif %}
 
         </table>
-       </div>
-        <section id="btn-creer-sortie">
+        </div>
+        <div id="btn-creer-sortie">
             <button class="btn btn-primary btn-lg" onclick="location.href='{{ path('sortie_creer') }}';">Créer une sortie</button>
-        </section>
-    </section>
+        </div>
+       </div>
+
+
 
 
 
