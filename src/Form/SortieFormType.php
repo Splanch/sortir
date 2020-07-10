@@ -74,9 +74,7 @@ class SortieFormType extends AbstractType
             ->add('longitude',TextType::class,[
                 'mapped'=>false,
             ])
-            ->add('enregistrer',SubmitType::class,[
-
-            ])
+            ->add('enregistrer',SubmitType::class)
             ->add('publier',SubmitType::class)
             ->add('annuler',ButtonType::class,[
                 'attr'=>['onclick'=>'location.href="/sortir/public/"']
