@@ -20,7 +20,7 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
-   public function findAllSortie()
+   public function findAllSorties()
     {
 
         $result=$this->createQueryBuilder('s')
@@ -28,8 +28,10 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('c')
             ->join('s.etat', 'e')
             ->addSelect('e')
+            ->join('s.organisateur', 'o')
+            ->addSelect('o')
             ->andWhere("e.libelle !='Historisée'")
-            ->join('s.participants', 'p')
+            ->leftJoin('s.participants', 'p')
             ->addSelect('p')
             ->getQuery()
             ->getArrayResult();
@@ -39,11 +41,12 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
-
-
     public function findSortieParametre($user,$searchParameters): ?array
     {
-        $result=$this->createQueryBuilder('s');
+        $result=$this->createQueryBuilder('s')
+            ->andWhere('s.dateHeureDebut < :dateFin')
+            ->setParameter(':dateFin', $searchParameters['dateFin']);
+
 
         if ($searchParameters['organiseesParMoi']) {
             $result = $result->andWhere('s.organisateur = :org')
@@ -72,17 +75,19 @@ class SortieRepository extends ServiceEntityRepository
         }
 
             $result = $result
-                ->andWhere('s.dateHeureDebut < :dateFin')
-                ->setParameter(':dateFin', $searchParameters['dateFin'])
+
                 ->join('s.campus', 'c')
+                ->andWhere('s.campus = :campus')
+                ->setParameter('campus', $searchParameters['campus'])
                 ->addSelect('c')
-                ->andWhere('c.nom = :campus')
-                ->setParameter(':campus', $searchParameters['campus'])
                 ->join('s.etat', 'e')
                 ->addSelect('e')
                 ->andWhere("e.libelle !='Historisée'")
-                ->join('s.participants', 'p')
+                ->andWhere("e.libelle !='En création'")
+                ->leftJoin('s.participants', 'p')
                 ->addSelect('p')
+                ->join('s.organisateur', 'o')
+                ->addSelect('o')
                 ->groupBy('s.id')
                 ->getQuery()
                 ->getArrayResult();

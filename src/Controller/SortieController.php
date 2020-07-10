@@ -26,18 +26,20 @@ class SortieController extends AbstractController
         }
         $form=$this->createForm(RechercheSortieType::class);
         $form->handleRequest($request);
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sorties= $sortieRepo->findAllSorties();
+        dump($sorties);
        if ($form->isSubmitted()) {
             $searchParameters= $form->getData();
             dump($searchParameters);
 
-           $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
            $sorties= $sortieRepo->findSortieParametre($user,$searchParameters);
            dump($sorties);
        }
 
         return $this->render('sortie/recherche.html.twig', [
         'rechercheSortieForm'=>$form->createView(),
-        //'sorties'=>$sorties
+        'sorties'=>$sorties
         ]);
     }
 
