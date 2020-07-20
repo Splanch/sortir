@@ -47,6 +47,7 @@
             </thead>
             <tbody>
                 {% for sortie in sorties %}
+                    {%  if (sortie.etat.libelle!='En création' or sortie.organisateur.id == app.user.id)  %}
                     <tr>
                         <td id="nomSortie">{{sortie.nom | lower |capitalize}}</td>
                         <td>{{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</td>
@@ -68,17 +69,19 @@
                             {% for participant in sortie.participants %}
                                 {% if (app.user.id == participant.id and sortie.etat.libelle != "Terminée") %}
                                     - Se désister
-                                {% elseif (app.user.id == sortie.organisateur.id)%}
-                                    - Annuler
 
                                 {% endif %}
                             {% endfor %}
-                                {% if  sortie.etat.libelle == 'Ouverte'%}
+                                {% if (app.user.id == sortie.organisateur.id and sortie.etat.libelle != "Terminée")%}
+                                    - Annuler
+                                {% endif %}
+                                {% if  (sortie.etat.libelle == 'Ouverte' and app.user.id != sortie.organisateur.id)%}
                                     - S'inscrire
                                     {% endif %}
                             {% endif %}
                             </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
             {% endif %}
