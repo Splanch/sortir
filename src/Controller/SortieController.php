@@ -120,8 +120,9 @@ class SortieController extends AbstractController
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortieInfos= $sortieRepo->find($id);
 
+//        recuperation d'état "Annulée"
         $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
-        $annulee = $etatRepo-> find(20);
+        $annulee = $etatRepo->findOneByLibelle('Annulée');
 
         $form=$this->createForm(AnnulerSortieType::class);
         $form->handleRequest($request);
