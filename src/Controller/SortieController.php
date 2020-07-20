@@ -4,15 +4,19 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
 use App\Form\RechercheSortieType;
 use App\Form\SortieFormType;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SortieController extends AbstractController
 {
@@ -135,4 +139,21 @@ class SortieController extends AbstractController
             'sortieInfos'=>$sortieInfos,
         ]);
     }
+
+    /**
+     * @Route("sortie/inscrire{id}", name="inscrire")
+     */
+    public function inscrire($id, UserInterface $user, EntityManagerInterface $manager){
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+        $sortie->addParticipant($user);
+        $manager->persist($sortie);
+        $manager->flush();
+        $this->addFlash('success','Vous êtes inscrit !');
+        return $this->redirectToRoute('sortie_recherche');
+
+    }
+//    ($id, UserInterface $user, Request $request) {
+
+//    }
 }

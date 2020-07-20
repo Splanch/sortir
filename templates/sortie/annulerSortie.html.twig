@@ -17,7 +17,7 @@
             </p>
             <p class="row" >
                 <span class="col-sm-4">Lieu : </span>
-                <span class="col-sm-8">{{ sortieInfos.lieu.nom }}</span>
+                <span class="col-sm-8">{{ sortieInfos.lieu.nom }}, {{ sortieInfos.lieu.ville.codePostal}} {{ sortieInfos.lieu.ville.nom }}</span>
             </p>
             {{ form_start(annulerSortie) }}
             {{ form_row(annulerSortie.motifAnnulation, {

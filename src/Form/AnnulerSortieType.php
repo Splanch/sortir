@@ -16,13 +16,12 @@ class AnnulerSortieType extends AbstractType
     {
         $builder
             ->add('motifAnnulation', TextareaType::class)
-            ->add('enregistrer',SubmitType::class, ['attr'=>
-                ['class'=>'btn btn-primary']])
-            ->add('annuler',ButtonType::class,['attr'=>
-                ['class'=>'btn btn-primary',
-                    'onclick'=>'location.href ="/sortir/public/"']
-            ])
-        ;
+            ->add('enregistrer', SubmitType::class, ['attr' =>
+                ['class' => 'btn btn-primary']])
+            ->add('annuler', ButtonType::class, ['attr' =>
+                ['class' => 'btn btn-primary',
+                    'onclick' => 'location.href ="/sortir/public/"']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

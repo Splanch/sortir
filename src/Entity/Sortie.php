@@ -187,6 +187,7 @@ class Sortie
 
     public function addParticipant(Participant $participant): self
     {
+
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
             $participant->addInscription($this);
