@@ -66,7 +66,7 @@
                             {% else %}
                             <a href="{{ path('sortie_afficher',{'id':sortie.id}) }}">Afficher</a>
                             {% for participant in sortie.participants %}
-                                {% if (app.user.id == participant.id) %}
+                                {% if (app.user.id == participant.id and sortie.etat.libelle != "Terminée") %}
                                     - Se désister
                                 {% elseif (app.user.id == sortie.organisateur.id)%}
                                     - Annuler
