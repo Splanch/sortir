@@ -1,5 +1,5 @@
 @echo off
 
 cd C:\wamp64\www\sortir
-php bin/console app:changement-etat
-set /p nom= Quel est votre nom ?
+php bin/console app:archivage
+set /p nom= Quel est votre Prenom ?

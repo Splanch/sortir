@@ -2,17 +2,18 @@
 
 namespace App\Command;
 
-
-use App\Service\AffichageSortie;
 use App\Service\ArchivageSortie;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ChangementEtatCommand extends Command
+class EnCoursCommand extends Command
 {
-    protected static $defaultName = 'app:changement-etat';
+    protected static $defaultName = 'app:en-cours';
+
     private $as;
 
     public function __construct(ArchivageSortie $as)
@@ -24,12 +25,17 @@ class ChangementEtatCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Changement d\'état des sorties ');
+            ->setDescription('Passage des Sortie à En cours , et à clôturée la date de fin d\'inscriptions est dépassée');
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->as->archiverSorties();
+        $io = new SymfonyStyle($input, $output);
+      $bob= $this->as->clotureEtEnCoursSorties();
+
+        $io->success($bob->format('Y-m-d H:i:s'));
+
         return 0;
     }
 }

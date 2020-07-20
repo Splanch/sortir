@@ -34,11 +34,47 @@ class ArchivageSortie
 
                 $sort->setEtat($etat);
                 $this->em->persist($sort);
-                $this->em->flush();
+
+
+            }
+
+        }
+        $this->em->flush();
+
+    }
+
+    public function clotureEtEnCoursSorties(){
+        $repo = $this->em->getRepository(Sortie::class);
+        $repoEtats = $this->em->getRepository(Etat::class);
+
+        $sorties = $repo->findAll();
+        $cloture= $repoEtats->findOneByLibelle('Clôturée');
+        $enCours= $repoEtats->findOneByLibelle('En cours');
+        $archiver = $repoEtats->findOneByLibelle('Historisée');
+        $bob=0;
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+        foreach ($sorties as $sortie){
+                $datedefin = $sortie->getDateHeureDebut();
+                $datedefin->modify('+'.$sortie->getDuree().'minutes');
+                return $datedefin;
+
+            if (($date>=($sortie->getDateHeureDebut()))&&($date<=$datedefin)  ){
+
+                $sortie->setEtat($enCours);
+                $this->em->persist($sortie);
+                $bob++;
+            }
+
+            if (($date>$datedefin) && ($sortie->getEtat()!=$archiver)  ){
+
+                $sortie->setEtat($cloture);
+                $this->em->persist($sortie);
 
             }
         }
-
-        return ;
+        $this->em->flush();
+        return $bob;
     }
 }
