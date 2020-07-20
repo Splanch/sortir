@@ -46,7 +46,7 @@ class SortieRepository extends ServiceEntityRepository
 
 
         $result=$this->createQueryBuilder('s')
-            ->andWhere('s.dateHeureDebut < :dateFin')
+            ->andWhere('s.dateHeureDebut <= :dateFin')
             ->setParameter(':dateFin', $searchParameters['dateFin']);
 
 

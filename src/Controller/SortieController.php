@@ -113,17 +113,21 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/cancel/{id}", name="sortie_annuler")
+     * @Route("/sortie/annuler/{id}", name="sortie_annuler")
      */
     public function annuler($id, Request $request) :Response
     {
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortieInfos= $sortieRepo->find($id);
 
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $annulee = $etatRepo-> find(20);
+
         $form=$this->createForm(AnnulerSortieType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $sortieInfos->setMotifAnnulation($sortie=$form->getData()->getMotifAnnulation());
+            $sortieInfos->setEtat($annulee);
             $majInfo = $sortieRepo->findOneById($sortieInfos->getId());
 
             $em = $this->getDoctrine()->getManager();
@@ -141,7 +145,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("sortie/inscrire{id}", name="inscrire")
+     * @Route("sortie/inscrire/{id}", name="inscrire")
      */
     public function inscrire($id, UserInterface $user, EntityManagerInterface $manager){
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
@@ -155,7 +159,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("sortie/desister{id}", name="desister")
+     * @Route("sortie/desister/{id}", name="desister")
      */
     public function desister($id, UserInterface $user, EntityManagerInterface $manager) {
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
