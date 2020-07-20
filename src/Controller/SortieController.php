@@ -153,7 +153,17 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('sortie_recherche');
 
     }
-//    ($id, UserInterface $user, Request $request) {
 
-//    }
+    /**
+     * @Route("sortie/desister{id}", name="desister")
+     */
+    public function desister($id, UserInterface $user, EntityManagerInterface $manager) {
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+        $sortie->removeParticipant($user);
+        $manager->persist($sortie);
+        $manager->flush();
+        $this->addFlash('success','Vous vous êtes désisté !');
+        return $this->redirectToRoute('sortie_recherche');
+    }
 }
