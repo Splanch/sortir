@@ -36,10 +36,8 @@ class SortieController extends AbstractController
         dump($sorties);
        if ($form->isSubmitted()) {
             $searchParameters= $form->getData();
-            dump($searchParameters);
-
            $sorties= $sortieRepo->findSortieParametre($user,$searchParameters);
-           dump($sorties);
+
        }
 
         return $this->render('sortie/recherche.html.twig', [
