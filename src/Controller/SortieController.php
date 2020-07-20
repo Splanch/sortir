@@ -169,4 +169,18 @@ class SortieController extends AbstractController
         $this->addFlash('success','Vous vous êtes désisté !');
         return $this->redirectToRoute('sortie_recherche');
     }
+
+    /**
+     * @Route("sortie/publier/{id}", name="publier")
+     */
+    public function publier($id, UserInterface $user, EntityManagerInterface $manager){
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+        $sortie->addParticipant($user);
+        $manager->persist($sortie);
+        $manager->flush();
+        $this->addFlash('success','Vous êtes inscrit !');
+        return $this->redirectToRoute('sortie_recherche');
+
+    }
 }

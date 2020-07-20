@@ -17,7 +17,7 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil_mon_profil")
      */
-    public function monprofil($id, $affichage = false, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function monProfil($id, $affichage = false, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $repo = $this->getDoctrine()->getRepository(Participant::class);
         $user = $repo->find($id);

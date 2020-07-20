@@ -61,12 +61,13 @@
                                 {% endfor %}
                             </td>
                             <td><a href="{{ path('profil_afficher', {'id': sortie.organisateur.id}) }}"
-                                   title="{{ sortie.organisateur.pseudo }}">{{ sortie.organisateur.pseudo }}</a></td>
+                                   title="{{ sortie.organisateur.pseudo }}">{{ sortie.organisateur.pseudo }}</td>
                             <td>
 
 {#                                    MODIFIER-PUBLIER(etat en création)#}
                                 {% if (sortie.etat.libelle == 'En création' and app.user.id == sortie.organisateur.id) %}
-                                    Modifier - Publier
+                                    <a href="{{ path('sortie_modifier', {'id': sortie.id}) }}"> Modifier</a>
+                                    -Publier
                                 {% else %}
 
 {#                                    AFFICHER LA SORTIE#}
