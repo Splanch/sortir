@@ -15,8 +15,11 @@
     <div>Lieu : </div><div>{{ sortieInfos.lieu.nom }}</div>
     <div>Rue : </div><div>{{ sortieInfos.lieu.rue }}</div>
     <div>Code Postal : </div><div>{{ sortieInfos.lieu.ville.codePostal }}</div>
-    <div>Latitude</div><div>{{ sortieInfos.lieu.latitude }}</div>
-    <div>Longitude</div><div>{{ sortieInfos.lieu.longitude }}</div>
+    <div>Latitude :</div><div>{{ sortieInfos.lieu.latitude }}</div>
+    <div>Longitude :</div><div>{{ sortieInfos.lieu.longitude }}</div>
+    {% if sortieInfos.motifAnnulation is not empty %}
+    <div>Motif d'annulation :</div><div>{{ sortieInfos.motifAnnulation }}</div>
+    {% endif %}
 </div>
 <div id="liste-participants">
     <h4>Liste des participants Inscrits</h4>
