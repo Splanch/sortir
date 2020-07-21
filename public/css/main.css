@@ -68,3 +68,31 @@ form{
 {
    background-color: #f9a927 ;
 }
+
+#infosSortie {
+    background-color: #DDDDDD;
+    display: block;
+    border-radius: 10px;
+    margin-left: 1%;
+    margin-right: 1%;
+    }
+
+#descriptionSortie {
+    display: block;
+    border-radius: 10px;
+    background-color: #DDDDDD;
+}
+
+#infosPratiques {
+    display: block;
+    border-radius: 10px;
+    margin-left: 1%;
+    margin-right: 1%;
+    background-color: #DDDDDD;
+}
+
+h6, h3, h2 {
+    text-align: center;
+    margin-top: 2%;
+}
+
