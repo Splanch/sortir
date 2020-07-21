@@ -43,13 +43,9 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSortieParametre($user,$searchParameters): ?array
     {
-
-
         $result=$this->createQueryBuilder('s')
             ->andWhere('s.dateHeureDebut <= :dateFin')
             ->setParameter(':dateFin', $searchParameters['dateFin']);
-
-
 
         if ($searchParameters['organiseesParMoi']) {
             $result = $result->andWhere('s.organisateur = :org')
@@ -78,16 +74,11 @@ class SortieRepository extends ServiceEntityRepository
         }
 
             $result = $result
-
-//                ->join('s.campus', 'c')
                 ->andWhere('s.campus = :campus')
                 ->setParameter('campus', $searchParameters['campus'])
-//                ->addSelect('c')
                 ->join('s.etat', 'e')
                 ->addSelect('e')
                 ->andWhere("e.libelle !='Historisée'")
-//                ->andWhere("s.organisateur != :org AND e.libelle !='En création'")
-//                ->setParameter('org', $user)
                 ->leftJoin('s.participants', 'p')
                 ->addSelect('p')
                 ->join('s.organisateur', 'o')
