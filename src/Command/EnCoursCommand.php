@@ -34,7 +34,7 @@ class EnCoursCommand extends Command
         $io = new SymfonyStyle($input, $output);
       $bob= $this->as->clotureEtEnCoursSorties();
 
-        $io->success($bob->format('Y-m-d H:i:s'));
+        $io->success($bob[0].' '.$bob[1].' '.$bob[2].' '.$bob[3]);
 
         return 0;
     }

@@ -28,14 +28,12 @@ class ArchivageSortie
         $date = new \DateTime();
         $date->modify('-30 day');
 
-        foreach ($sorties as $sort){
+        foreach ($sorties as $sortie){
 
-            if (($sort->getDateHeureDebut()) < $date){
+            if (($sortie->getDateHeureDebut()) < $date){
 
-                $sort->setEtat($etat);
-                $this->em->persist($sort);
-
-
+                $sortie->setEtat($etat);
+                $this->em->persist($sortie);
             }
 
         }
@@ -48,33 +46,44 @@ class ArchivageSortie
         $repoEtats = $this->em->getRepository(Etat::class);
 
         $sorties = $repo->findAll();
-        $cloture= $repoEtats->findOneByLibelle('Clôturée');
+        $cloturer= $repoEtats->findOneByLibelle('Clôturée');
         $enCours= $repoEtats->findOneByLibelle('En cours');
         $archiver = $repoEtats->findOneByLibelle('Historisée');
+        $terminer = $repoEtats->findOneByLibelle('Terminée');
+
         $bob=0;
+        $bob2=0;
+        $bob3=0;
+        $bob4=0;
         $date = new \DateTime();
         $date->setTimezone(new \DateTimeZone('Europe/Paris'));
 
         foreach ($sorties as $sortie){
                 $datedefin = $sortie->getDateHeureDebut();
+                $datedefin->setTimezone(new \DateTimeZone('Europe/Paris'));
                 $datedefin->modify('+'.$sortie->getDuree().'minutes');
-                return $datedefin;
+                $bob++;
 
-            if (($date>=($sortie->getDateHeureDebut()))&&($date<=$datedefin)  ){
-
+           /* if (($date > $sortie->getDateHeureDebut())){
                 $sortie->setEtat($enCours);
                 $this->em->persist($sortie);
-                $bob++;
+                $bob2++;
+            }*/
+
+            if (($date>$sortie->getDateLimiteInscription()) && ($sortie->getEtat()!=$archiver) &&($sortie->getEtat()!=$cloturer) &&($sortie->getEtat()!=$terminer)&&($sortie->getEtat()!=$enCours)  ){
+                $sortie->setEtat($cloturer);
+                $this->em->persist($sortie);
+                $bob3++;
+
             }
 
-            if (($date>$datedefin) && ($sortie->getEtat()!=$archiver)  ){
-
-                $sortie->setEtat($cloture);
+            if($date>$datedefin && ($sortie->getEtat()!=$archiver)&& ($sortie->getEtat()!=$terminer)){
+                $sortie->setEtat($terminer);
                 $this->em->persist($sortie);
-
+                $bob4++;
             }
         }
         $this->em->flush();
-        return $bob;
+        return [$bob,$bob2,$bob3,$bob4];
     }
 }
