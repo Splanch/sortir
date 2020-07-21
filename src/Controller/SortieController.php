@@ -173,14 +173,40 @@ class SortieController extends AbstractController
     /**
      * @Route("sortie/publier/{id}", name="publier")
      */
-    public function publier($id, UserInterface $user, EntityManagerInterface $manager){
+    public function publier($id, UserInterface $user, EntityManagerInterface $manager)
+    {
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $sortieRepo->find($id);
-        $sortie->addParticipant($user);
-        $manager->persist($sortie);
-        $manager->flush();
-        $this->addFlash('success','Vous êtes inscrit !');
-        return $this->redirectToRoute('sortie_recherche');
+        $organisateur = $sortie->getOrganisateur();
+        $etat = $sortie->getEtat();
+//       état "En création"
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatEnCreation = $etatRepo->findOneByLibelle('En création');
+//        état "Ouverte"
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatOuvert = $etatRepo->findOneByLibelle('Ouverte');
 
+        $dateSortie = $sortie->getDateHeureDebut();
+        $dateInscription = $sortie->getDateLimiteInscription();
+        $dateActuelle = new \DateTime();
+
+        if (!$user) {
+            return $this->render('security/login.html.twig');
+        } elseif ($user == $organisateur && $etat == $etatEnCreation) {
+            if ($dateInscription > $dateActuelle && $dateInscription <= $dateSortie) {
+                $sortie->setEtat($etatOuvert);
+                $manager->persist($sortie);
+                $manager->flush();
+                $this->addFlash('success', 'Votre sortie a été publiée !');
+                return $this->redirectToRoute('sortie_recherche');
+
+            } else {
+                $this->addFlash('warning', 'Veuillez modifiez les dates !');
+                return $this->redirectToRoute('sortie_recherche');
+
+            }
+        } else {
+            return $this->redirectToRoute('sortie_recherche');
+        }
     }
 }

@@ -67,7 +67,8 @@
 {#                                    MODIFIER-PUBLIER(etat en création)#}
                                 {% if (sortie.etat.libelle == 'En création' and app.user.id == sortie.organisateur.id) %}
                                     <a href="{{ path('sortie_modifier', {'id': sortie.id}) }}"> Modifier</a>
-                                    -Publier
+                                    <a href="{{ path('publier', {'id': sortie.id}) }}"> -Publier</a>
+
                                 {% else %}
 
 {#                                    AFFICHER LA SORTIE#}
