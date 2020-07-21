@@ -69,12 +69,14 @@ form{
    background-color: #f9a927 ;
 }
 
+#sortie-infos{
+    padding: 5px;
+}
+
 #infosSortie {
     background-color: #DDDDDD;
     display: block;
     border-radius: 10px;
-    margin-left: 1%;
-    margin-right: 1%;
     }
 
 #descriptionSortie {
@@ -86,28 +88,11 @@ form{
 #infosPratiques {
     display: block;
     border-radius: 10px;
-    margin-left: 1%;
-    margin-right: 1%;
     background-color: #DDDDDD;
+    margin-top: 5%;
 }
 
 h6, h3, h2 {
     text-align: center;
-    margin-top: 2vh;
 }
 
-#date-participant{
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-}
-
-.nom-date-recherche{
-    border: darkgray ;
-    border-radius: 6px;
-    background-color: #f9a927;
-    color: white;
-    margin-right: 2vw;
-    font-size: 3vh;
-    margin-bottom: 2vh;
-
-}
