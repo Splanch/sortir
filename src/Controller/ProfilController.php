@@ -46,7 +46,7 @@ class ProfilController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->addFlash('success', 'Votre profil a été modifié.');
-                return $this->redirectToRoute();
+                return $this->redirectToRoute('sortie_recherche');
             }
         }
         return $this->render('profil/profil.html.twig', [
@@ -60,10 +60,8 @@ class ProfilController extends AbstractController
      */
     public function afficherprofil($id, $affichage = true, Request $request)
     {
-
         $repo = $this->getDoctrine()->getRepository(Participant::class);
         $user = $repo->find($id);
-
 
         return $this->render('profil/profil.html.twig', [
             'user' => $user,

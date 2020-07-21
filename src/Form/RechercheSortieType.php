@@ -23,40 +23,39 @@ class RechercheSortieType extends AbstractType
 
         $builder
             ->add('campus', EntityType::class, [
-                'class'=>Campus::class,
-                'choice_label'=>function(Campus $campus){
-                return $campus->getNom();
+                'class' => Campus::class,
+                'choice_label' => function (Campus $campus) {
+                    return $campus->getNom();
 
                 }
             ])
-            ->add('keywords', SearchType::class,[
-                'label'=> 'Le nom de la sortie contient : '
+            ->add('keywords', SearchType::class, [
+                'label' => 'Le nom de la sortie contient : '
             ])
-            ->add('dateDebut',DateType::class,[
-                'format'=>'dd MM yyyy',
-                'label'=> 'Entre',
+            ->add('dateDebut', DateType::class, [
+                'format' => 'dd MM yyyy',
+                'label' => 'Entre',
                 'data' => $aujourdhui,
 
             ])
-            ->add('dateFin',DateType::class,[
-                'format'=>'dd MM yyyy',
-                'label'=> 'et',
+            ->add('dateFin', DateType::class, [
+                'format' => 'dd MM yyyy',
+                'label' => 'et',
                 'data' => $dansUnMois->modify('+1 month')
             ])
-            ->add('organiseesParMoi', CheckboxType::class,[
-                'label'=> 'Sorties organisées par moi',
+            ->add('organiseesParMoi', CheckboxType::class, [
+                'label' => 'Sorties organisées par moi',
             ])
-            ->add('jeSuisInscrit', CheckboxType::class,[
-                'label'=> 'Sorties auxquelles je suis inscrit/e'
+            ->add('jeSuisInscrit', CheckboxType::class, [
+                'label' => 'Sorties auxquelles je suis inscrit/e'
             ])
-            ->add('nonInscrit', CheckboxType::class,[
-                'label'=> 'Sorties auxquelles je ne suis pas inscrit/e'
+            ->add('nonInscrit', CheckboxType::class, [
+                'label' => 'Sorties auxquelles je ne suis pas inscrit/e'
             ])
-            ->add('sortiesPassees', CheckboxType::class,[
-                'label'=> 'Sorties passées'
+            ->add('sortiesPassees', CheckboxType::class, [
+                'label' => 'Sorties passées'
             ])
-            ->add('rechercher', SubmitType::class)
-        ;
+            ->add('rechercher', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

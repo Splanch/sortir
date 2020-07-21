@@ -18,8 +18,8 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new Participant();
-        $userConnecte=$this->getUser();
-        $form = $this->createForm(RegistrationFormType::class, $user, array('userConnecte'=>$userConnecte));
+        $userConnecte = $this->getUser();
+        $form = $this->createForm(RegistrationFormType::class, $user, array('userConnecte' => $userConnecte));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -31,18 +31,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            if($form->getData()->getAdministrateur())
-            {
+            if ($form->getData()->getAdministrateur()) {
                 $user->setRoles(array('ROLE_ADMIN'));
             } else {
                 $user->setRoles(array('ROLE_USER'));
             }
 
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success','Le nouvel utilisateur a été créé !');
+            $this->addFlash('success', 'Le nouvel utilisateur a été créé !');
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_register');

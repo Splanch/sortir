@@ -74,7 +74,7 @@ class ConnexionAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Email ou mot de passe invalide');
         }
 
-        if (!$user->getActif()){
+        if (!$user->getActif()) {
             throw new CustomUserMessageAuthenticationException('Compte inactif');
         }
 

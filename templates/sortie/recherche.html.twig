@@ -53,7 +53,7 @@
                             <td>{{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</td>
                             <td>{{ sortie.dateLimiteInscription | date("d/m/Y") }}</td>
                             <td>{{ sortie.participants |length }}/{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.etat.libelle}}</td>
+                            <td>{{ sortie.etat.libelle }}</td>
                             <td class="text-center">{% for participant in sortie.participants %}
                                     {% if (app.user.id == participant.id) %}
                                         x
@@ -64,24 +64,24 @@
                                    title="{{ sortie.organisateur.pseudo }}">{{ sortie.organisateur.pseudo }}</td>
                             <td>
 
-{#                                    MODIFIER-PUBLIER(etat en création)#}
+                                {#                                    MODIFIER-PUBLIER(etat en création)#}
                                 {% if (sortie.etat.libelle == 'En création' and app.user.id == sortie.organisateur.id) %}
                                     <a href="{{ path('sortie_modifier', {'id': sortie.id}) }}"> Modifier</a>
                                     <a href="{{ path('publier', {'id': sortie.id}) }}"> -Publier</a>
 
                                 {% else %}
 
-{#                                    AFFICHER LA SORTIE#}
+                                    {#                                    AFFICHER LA SORTIE#}
                                     <a href="{{ path('sortie_afficher',{'id':sortie.id}) }}">Afficher</a>
 
-{#                                    ANNULER#}
+                                    {#                                    ANNULER#}
                                     {% if app.user.id == sortie.organisateur.id %}
                                         {% if (sortie.etat.libelle != "Annulée" and sortie.etat.libelle != "Terminée") %}
                                             <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}">-Annuler</a>
                                         {% endif %}
                                     {% endif %}
 
-{#                                    SE DESISTER#}
+                                    {#                                    SE DESISTER#}
                                     {% set inscrit = false %}
                                     {% for participant in sortie.participants %}
                                         {% if (app.user.id == participant.id and sortie.etat.libelle != "Terminée") %}
@@ -90,7 +90,7 @@
                                         {% endif %}
                                     {% endfor %}
 
-{#                                    S'INSCRIRE#}
+                                    {#                                    S'INSCRIRE#}
                                     {% if  (sortie.etat.libelle == 'Ouverte' and app.user.id != sortie.organisateur.id
                                         and inscrit == false) %}
                                         <a href="{{ path('inscrire',{'id':sortie.id}) }}">- S'inscrire</a>

@@ -8,12 +8,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function MongoDB\Driver\Monitoring\removeSubscriber;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -44,9 +43,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('password',RepeatedType::class,[
-                'type'=>PasswordType::class,
-                'mapped'=>false,
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
                 'invalid_message' => 'Veuillez rentrer deux fois le même mot de passe.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
@@ -62,23 +61,21 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'Le mot de passe ne doit pas dépasser {{ limit }} characters maximum',
                     ]),
                 ],
-                'first_options'  => ['label' => 'Mot de passe'],
+                'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation'],
             ]);
 
 
-
-        if($options['userConnecte']->getRoles()[0] == 'ROLE_ADMIN'){
+        if ($options['userConnecte']->getRoles()[0] == 'ROLE_ADMIN') {
             $builder
-
                 ->add('administrateur')
                 ->add('actif')
-                ->add('rattacheA',EntityType::class,[
-                    'class'=>Campus::class,
-                    'choice_label'=> function(Campus $campus){
+                ->add('rattacheA', EntityType::class, [
+                    'class' => Campus::class,
+                    'choice_label' => function (Campus $campus) {
                         return $campus->getNom();
                     }
-                ])   ;
+                ]);
         }
 
     }

@@ -1,4 +1,4 @@
-{%  extends 'layout.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block main %}
     {% if affichage %}
@@ -8,26 +8,26 @@
                 <img src="" alt="logo profil">
             </div>
             <div class="float-right col-sm-10">
-               <p class="row">
-                   <span class="col-sm-2">Prénom : </span>
-                   <span class="col-sm-10">{{ user.prenom }}</span>
-               </p>
+                <p class="row">
+                    <span class="col-sm-2">Prénom : </span>
+                    <span class="col-sm-10">{{ user.prenom }}</span>
+                </p>
                 <p class="row">
                     <span class="col-sm-2">Nom : </span>
                     <span class="col-sm-10">{{ user.nom }}</span>
-               </p>
+                </p>
                 <p class="row">
                     <span class="col-sm-2">Téléphone : </span>
                     <span class="col-sm-10">{{ user.telephone }}</span>
-               </p>
-                <p class="row" >
+                </p>
+                <p class="row">
                     <span class="col-sm-2">Email : </span>
                     <span class="col-sm-10">{{ user.email }}</span>
-               </p>
+                </p>
                 <p class="row">
                     <span class="col-sm-2">Campus : </span>
                     <span class="col-sm-10">{{ user.rattacheA.nom }}</span>
-               </p>
+                </p>
             </div>
             <div class="mb-5 clearfix"></div>
         </div>
