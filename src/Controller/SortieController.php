@@ -33,8 +33,38 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties= $sortieRepo->findAllSorties();
-        dump($sorties);
-       if ($form->isSubmitted()) {
+
+
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+        foreach ($sorties as $sortie){
+            $dateDeFinSortie = clone $sortie->getDateHeureDebut();
+            $dateDeFinSortie->modify('+'.$sortie->getDuree().'minutes');
+            $etat= new Etat();
+
+            if($sortie->getEtat()->getLibelle() == 'Historisée'
+                or $sortie->getEtat()->getLibelle() =='En Création'
+                or $sortie->getEtat()->getLibelle() =='Annulée'){
+
+            }else {
+                 if ($date > $sortie->getDateHeureDebut() and $date < $dateDeFinSortie) {
+                    $etat->setLibelle('En Cours');
+                    $sortie->setEtat($etat);
+                    break;
+                }elseif ($dateDeFinSortie < $date) {
+                    $etat->setLibelle('Terminée');
+                    $sortie->setEtat($etat);
+                    break;
+                } elseif ((sizeof($sortie->getParticipants()) == $sortie->getNbInscriptionsMax()) or $date > $sortie->getdateLimiteInscription()) {
+                    $etat->setLibelle('Clôturée');
+                    $sortie->setEtat($etat);
+                    break;
+                }
+
+            }
+        }
+
+        if ($form->isSubmitted()) {
             $searchParameters= $form->getData();
            $sorties= $sortieRepo->findSortieParametre($user,$searchParameters);
 

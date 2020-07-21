@@ -34,7 +34,7 @@ class SortieRepository extends ServiceEntityRepository
             ->leftJoin('s.participants', 'p')
             ->addSelect('p')
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
 
         return $result;
 

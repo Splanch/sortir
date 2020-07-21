@@ -53,7 +53,7 @@
                             <td>{{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</td>
                             <td>{{ sortie.dateLimiteInscription | date("d/m/Y") }}</td>
                             <td>{{ sortie.participants |length }}/{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.etat.libelle }}</td>
+                            <td>{{ sortie.etat.libelle}}</td>
                             <td class="text-center">{% for participant in sortie.participants %}
                                     {% if (app.user.id == participant.id) %}
                                         x
