@@ -65,30 +65,79 @@ class AppFixtures extends Fixture
 
         $lieu1 = new Lieu();
         $lieu1->setNom('Tour Eiffel');
-        $lieu1->setRue($faker->streetName);
-        $lieu1->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu1->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu1->setVille($allVilles[rand(0, 2)]);
+        $lieu1->setRue('Champ de Mars, 5 Avenue Anatole France');
+        $lieu1->setLongitude('2.294481');
+        $lieu1->setLatitude('48.858370');
+        $lieu1->setVille($ville1);
         $manager->persist($lieu1);
 
         $lieu2 = new Lieu();
         $lieu2->setNom('Le Louvre');
-        $lieu2->setRue($faker->streetName);
-        $lieu2->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu2->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu2->setVille($allVilles[rand(0, 2)]);
+        $lieu2->setRue('Rue de Rivoli');
+        $lieu2->setLongitude('2.334595');
+        $lieu2->setLatitude('48.864824');
+        $lieu2->setVille($ville1);
         $manager->persist($lieu2);
 
         $lieu3 = new Lieu();
-        $lieu3->setNom('Le Vieux Port');
-        $lieu3->setRue($faker->streetName);
-        $lieu3->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu3->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu3->setVille($allVilles[rand(0, 2)]);
+        $lieu3->setNom('Arc de Triomphe');
+        $lieu3->setRue('Place Charles de Gaulle');
+        $lieu3->setLongitude('2.295');
+        $lieu3->setLatitude('48.8738');
+        $lieu3->setVille($ville1);
         $manager->persist($lieu3);
         $manager->flush();
 
-        $allLieux = array($lieu1, $lieu2, $lieu3);
+        $lieu4 = new Lieu();
+        $lieu4->setNom('Basilique de Fourvière');
+        $lieu4->setRue('8 Place de Fourvière');
+        $lieu4->setLongitude('4.819929');
+        $lieu4->setLatitude('45.760683');
+        $lieu4->setVille($ville2);
+        $manager->persist($lieu4);
+
+        $lieu5 = new Lieu();
+        $lieu5->setNom('Parc de la Tête d\'Or');
+        $lieu5->setRue('Boulevard de Stalingrad');
+        $lieu5->setLongitude('45.75');
+        $lieu5->setLatitude('4.85');
+        $lieu5->setVille($ville2);
+        $manager->persist($lieu5);
+
+        $lieu6 = new Lieu();
+        $lieu6->setNom('Théâtres romains');
+        $lieu6->setRue('Rue de l\'Antiquaille');
+        $lieu6->setLongitude('4.820088');
+        $lieu6->setLatitude('45.760703');
+        $lieu6->setVille($ville2);
+        $manager->persist($lieu6);
+        $manager->flush();
+
+        $lieu7 = new Lieu();
+        $lieu7->setNom('Vieux-Port');
+        $lieu7->setRue('Quai des Belges');
+        $lieu7->setLongitude('5.374298');
+        $lieu7->setLatitude('43.295160');
+        $lieu7->setVille($ville3);
+        $manager->persist($lieu7);
+
+        $lieu8 = new Lieu();
+        $lieu8->setNom('Basilique Notre-Dame de la Garde');
+        $lieu8->setRue('Rue Fort du Sanctuaire');
+        $lieu8->setLongitude('5.371234');
+        $lieu8->setLatitude('43.283961');
+        $lieu8->setVille($ville3);
+        $manager->persist($lieu8);
+
+        $lieu9 = new Lieu();
+        $lieu9->setNom('Château d\'If');
+        $lieu9->setRue('Ile d\'If');
+        $lieu9->setLongitude('5.325958');
+        $lieu9->setLatitude('43.280213');
+        $lieu9->setVille($ville3);
+        $manager->persist($lieu9);
+        $manager->flush();
+        $allLieux = array($lieu1, $lieu2, $lieu3, $lieu4, $lieu5, $lieu6, $lieu7, $lieu8, $lieu9);
         $allParticipants = array();
 
 
