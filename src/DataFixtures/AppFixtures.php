@@ -249,7 +249,7 @@ class AppFixtures extends Fixture
         $sortie4->setDateLimiteInscription($finInscription->modify('+4 day'));
         $sortie4->setNbInscriptionsMax(10);
         $sortie4->setInfosSortie('Boire un verre ou deux ou trois [Sortie clôturée car nombre max d\'inscrits atteint]');
-        $sortie4->setEtat($cloturee);
+        $sortie4->setEtat($ouverte);
         $sortie4->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie4->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
         $sortie4->setCampus($allCampus[rand(0, sizeof($allCampus) - 1)]);
@@ -266,7 +266,7 @@ class AppFixtures extends Fixture
         $sortie5->setDateLimiteInscription($finInscription->modify('-1 day'));
         $sortie5->setNbInscriptionsMax(15);
         $sortie5->setInfosSortie('Thierecelieux est ton village préféré ? Viens on sera bien bien bien bien ! ');
-        $sortie5->setEtat($cloturee);
+        $sortie5->setEtat($ouverte);
         $sortie5->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie5->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
         $sortie5->setCampus($allCampus[rand(0, sizeof($allCampus) - 1)]);
