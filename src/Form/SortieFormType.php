@@ -62,12 +62,24 @@ class SortieFormType extends AbstractType
                     return $lieu->getVille()->getCodePostal();
                 }
             ])
-            ->add('latitude', TextType::class, [
+            ->add('latitude', EntityType::class, [
+                'class' => Lieu::class,
                 'mapped' => false,
+                'label' => 'latitude',
+                'choice_label' => function (Lieu $lieu) {
+                    return $lieu->getLatitude();
+                }
             ])
-            ->add('longitude', TextType::class, [
+            ->add('longitude', EntityType::class, [
+                'class' => Lieu::class,
                 'mapped' => false,
+                'label' => 'longitude',
+                'choice_label' => function (Lieu $lieu) {
+                    return $lieu->getLongitude();
+                }
             ])
+
+
             ->add('enregistrer', SubmitType::class)
             ->add('publier', SubmitType::class)
             ->add('annuler', ButtonType::class, [

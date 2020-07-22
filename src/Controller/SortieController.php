@@ -9,6 +9,7 @@ use App\Form\AnnulerSortieType;
 use App\Form\RechercheSortieType;
 use App\Form\SortieFormType;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $sortieRepo->findAllSorties();
-        $date = new \DateTime();
+        $date = new DateTime();
         $date->setTimezone(new \DateTimeZone('Europe/Paris'));
         foreach ($sorties as $sortie) {
             $dateDeFinSortie = clone $sortie->getDateHeureDebut();
@@ -124,10 +125,61 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier")
      */
-    public function modifier()
+    public function modifier($id, UserInterface $user, Request $request) :Response
     {
-        return $this->render('sortie/sortie.html.twig', [
+        if (!$user) {
+            return $this->render('security/login.html.twig');
+        }
+
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie= $sortieRepo->find($id);
+
+        $form = $this->createForm(SortieFormType::class, $sortie);
+        $form->handleRequest($request);
+
+        $organisateur = $sortie->getOrganisateur();
+        $etat = $sortie->getEtat();
+//       état "En création"
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatEnCreation = $etatRepo->findOneByLibelle('En création');
+//        état "Ouverte"
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatOuvert = $etatRepo->findOneByLibelle('Ouverte');
+
+        if($user!=$organisateur or $etat!=$etatEnCreation){
+            return $this->redirectToRoute('sortie_recherche');
+        }
+
+        $dateSortie = $sortie->getDateHeureDebut();
+        $dateInscription = $sortie->getDateLimiteInscription();
+        $dateActuelle = new DateTime();
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($dateInscription > $dateActuelle && $dateInscription <= $dateSortie) {
+
+                if ($form->get('enregistrer')->isClicked()) {
+                    $this->addFlash('success', 'Vos modifications ont été enregistrées !');
+                }
+                if ($form->get('publier')->isClicked()) {
+                    $sortie->setEtat($etatOuvert);
+                    $this->addFlash('success', 'Votre sortie a été publiée !');
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($sortie);
+                $em->flush();
+                return $this->redirectToRoute('sortie_recherche');
+
+            }else {
+                $this->addFlash('warning', 'Veuillez modifiez les dates !');
+            }
+
+        }
+
+        return $this->render('sortie/modifierSortie.html.twig', [
             'controller_name' => 'SortieController',
+            'modifierSortie' => $form->createView()
         ]);
     }
 
@@ -197,6 +249,10 @@ class SortieController extends AbstractController
      */
     public function publier($id, UserInterface $user, EntityManagerInterface $manager)
     {
+        if (!$user) {
+            return $this->render('security/login.html.twig');
+        }
+
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $sortieRepo->find($id);
         $organisateur = $sortie->getOrganisateur();
@@ -208,27 +264,29 @@ class SortieController extends AbstractController
         $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $etatOuvert = $etatRepo->findOneByLibelle('Ouverte');
 
-        $dateSortie = $sortie->getDateHeureDebut();
-        $dateInscription = $sortie->getDateLimiteInscription();
-        $dateActuelle = new \DateTime();
-
-        if (!$user) {
-            return $this->render('security/login.html.twig');
-        } elseif ($user == $organisateur && $etat == $etatEnCreation) {
-            if ($dateInscription > $dateActuelle && $dateInscription <= $dateSortie) {
-                $sortie->setEtat($etatOuvert);
-                $manager->persist($sortie);
-                $manager->flush();
-                $this->addFlash('success', 'Votre sortie a été publiée !');
-                return $this->redirectToRoute('sortie_recherche');
-
-            } else {
-                $this->addFlash('warning', 'Veuillez modifiez les dates !');
-                return $this->redirectToRoute('sortie_recherche');
-
-            }
-        } else {
+        if($user!=$organisateur or $etat!=$etatEnCreation){
             return $this->redirectToRoute('sortie_recherche');
         }
+
+        $dateSortie = $sortie->getDateHeureDebut();
+        $dateInscription = $sortie->getDateLimiteInscription();
+        $dateActuelle = new DateTime();
+
+        if ($dateInscription > $dateActuelle && $dateInscription <= $dateSortie) {
+            $sortie->setEtat($etatOuvert);
+            $manager->persist($sortie);
+            $manager->flush();
+            $this->addFlash('success', 'Votre sortie a été publiée !');
+            return $this->redirectToRoute('sortie_recherche');
+
+        } else {
+            $this->addFlash('warning', 'Veuillez modifiez les dates !');
+            return $this->redirectToRoute('sortie_recherche');
+
+        }
+
+
+
+
     }
 }
