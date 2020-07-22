@@ -5,46 +5,64 @@
 
 
 <div id="sortie-infos">
-{#    <div class="row">#}
+    <div>
 {#    <div class="col-sm-3"><label>Nom de la sortie : </label></div><div class="col-sm-9">{{ sortieInfos.nom  }}</div>#}
 {#    </div>#}
     <h2>{{ sortieInfos.nom  }}</h2>
     <h6>Sortie organisée par <a href="{{ path('profil_afficher', {'id': sortieInfos.organisateur.id}) }}">
-            {{ sortieInfos.organisateur.pseudo }}</a></h6>
-    <div class="row">
-        <div id="infosSortie" class="col-sm-5">
-            <h3>Quand ???</h3>
-            <div class="row">
-                <div class="col-sm-6"><label> Date et heure de la sortie : </label></div><div class="col-sm-6">{{ sortieInfos.dateHeureDebut | date('d/m/Y h:i') }}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6"><label> Date limite d'inscription : </label></div><div class="col-sm-6"> {{ sortieInfos.dateLimiteInscription| date('d/m/Y h:i ') }}</div>
-            </div>
-            <div class="row">
-                <div></div>
-                <div class="col-sm-6"><label>Nombre de places : </label></div><div class="col-sm-6"> {{ sortieInfos.nbInscriptionsMax }}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6"><label>Durée : </label></div><div class="col-sm-6"> {{ sortieInfos.duree }} minutes</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6"><label>Campus : </label></div><div class="col-sm-6"> {{ sortieInfos.campus.nom }}</div>
-            </div>
+            {{ sortieInfos.organisateur.pseudo }}</a>
+    </h6>
+    {% if sortieInfos.motifAnnulation is not empty %}
+        <div class="alert alert-danger" id="alerte-annulation">
+            <h4>Sortie annulée !</h4>
+            <div>Motif d'annulation :</div>
+            <div>{{ sortieInfos.motifAnnulation }}</div>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-            <div id="descriptionSortie" class="row">
-                <div class="col-sm-12">
-                    <h3>Pour quoi faire ???</h3>
-                </div>
-                <div class="col-sm-12"> {{ sortieInfos.infosSortie }}</div>
-            </div>
+    {% endif %}
+{#    <div class="row">#}
+    <div id="descriptionSortie">
+        <h4>Description</h4>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6"> {{ sortieInfos.infosSortie }}</div>
+            <div class="col-sm-3"></div>
         </div>
     </div>
+    <div id="infosPratiques">
+        <h4>Infos pratiques</h4>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label> Date et heure de la sortie : </label></div>
+            <div class="col-sm-3">{{ sortieInfos.dateHeureDebut | date('d/m/Y h:i') }}</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label> Date limite d'inscription : </label></div>
+            <div class="col-sm-3"> {{ sortieInfos.dateLimiteInscription| date('d/m/Y h:i ') }}</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label>Nombre de places : </label></div>
+            <div class="col-sm-3"> {{ sortieInfos.nbInscriptionsMax }}</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label>Durée : </label></div>
+            <div class="col-sm-3"> {{ sortieInfos.duree }} minutes</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label>Campus : </label></div>
+            <div class="col-sm-3"> {{ sortieInfos.campus.nom }}</div>
+            <div class="col-sm-3"></div>
+        </div>
 
+        <hr class="my-4">
 
-    <div id="infosPratiques" class="row">
-        <h3>Où ???</h3>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-3"><label>Lieu : </label></div><div class="col-sm-3"> {{ sortieInfos.lieu.nom }}</div>
@@ -76,45 +94,37 @@
             <div class="col-sm-3"></div>
         </div>
     </div>
+    </div>
+    {% if sortieInfos.motifAnnulation is empty %}
+    <div id="liste-participants" class="container">
+        <br>
+        <h4>Participants</h4>
+        {% if sortieInfos.participants is empty %}
+        <p> Si vous vous inscrivez vous serez le premier !</p>
+        {% else %}
+        <br>
+        <div class="table-responsive tableResult">
+            <table class="table table-sm table-hover table-striped table-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Nom</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for participant in sortieInfos.participants %}
+                    <tr>
+                        <td><a href="{{ path('profil_afficher', {'id': participant.id}) }}>{{ participant.pseudo }} </a></td>
+                        <td>{{ participant.prenom }} {{ participant.nom |upper }}</td>
 
-    {% if sortieInfos.motifAnnulation is not empty %}
-        <h4>Sortie annulée!</h4>
-    <div>Motif d'annulation :</div><div>{{ sortieInfos.motifAnnulation }}</div>
-    {% endif %}
-</div>
-<div id="liste-participants">
-    <br>
-    <h3>Avec qui ???</h3>
-    {% if sortieInfos.participants is empty %}
-    <p> Si vous vous inscrivez vous serez le premier !</p>
-    {% else %}
-    <br>
-    <div class="table-responsive tableResult">
-        <table class="table table-sm table-hover table-striped table-light">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Nom</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for participant in sortieInfos.participants %}
-                <tr>
-                    <td><a href="{{ path('profil_afficher', {'id': participant.id}) }}>{{ participant.pseudo }} </a></td>
-                    <td>{{ participant.prenom }} {{ participant.nom |upper }}</td>
-
-                </tr>
-            {% endfor %}
-
-            </tbody>
-
-        </table>
-
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
     {% endif %}
-
-</div>
-
 
 {% endblock %}
 

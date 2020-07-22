@@ -2,35 +2,56 @@
 
 {% block main %}
     <div id="date-participant" class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-4 text-center  nom-date-recherche">
-                {{ app.user.pseudo }}
-            </div>
-            <div class="col-sm-4 text-center nom-date-recherche">
-              {{ "now"|date("d/m/Y") }}
-            </div>
+{#        <div class="row justify-content-center">#}
+{#            <div class="text-center  nom-date-recherche">#}
+{#                {{ app.user.pseudo }}#}
+{#            </div>#}
+{#            <div class="text-center nom-date-recherche">#}
+{#              {{ "now"|date("d/m/Y") }}#}
+{#            </div>#}
 
-        </div>
+{#        </div>#}
     </div>
 
     <div>
-        <h5>Filtrer les sorties</h5>
+        <div class="row">
+            <div class="col-sm-8"><h5>Filtrer les sorties</h5></div>
+            <div class="col-sm-4">                <div class="text-center  nom-date-recherche">
+                    {{ app.user.pseudo }}
+                </div>
+                <div class="text-center nom-date-recherche">
+                    {{ "now"|date("d/m/Y") }}
+                </div>
+            </div>
+        </div>
+{#        <h5>Filtrer les sorties</h5>#}
         {{ form_start(rechercheSortieForm,{'attr': {novalidate : 'novalidate'}}) }}
-        {{ form_row(rechercheSortieForm.campus) }}
-        {{ form_row(rechercheSortieForm.keywords) }}
-        <div id="dates-recherche-sortie">
-            {{ form_row(rechercheSortieForm.dateDebut) }}
-            {{ form_row(rechercheSortieForm.dateFin) }}
-        </div>
-        <div id="checkbox-recherche-sortie">
-            {{ form_row(rechercheSortieForm.organiseesParMoi) }}
-            {{ form_row(rechercheSortieForm.jeSuisInscrit) }}
-            {{ form_row(rechercheSortieForm.nonInscrit) }}
-            {{ form_row(rechercheSortieForm.sortiesPassees) }}
+        <div class="row">
+            <div class="col-sm-8">
+                {{ form_row(rechercheSortieForm.campus) }}
+                {{ form_row(rechercheSortieForm.keywords) }}
+                <div id="dates-recherche-sortie" class="row">
+                    <div class="col-sm-6">{{ form_row(rechercheSortieForm.dateDebut) }}</div>
+                    <div class="col-sm-6">{{ form_row(rechercheSortieForm.dateFin) }}</div>
+                </div>
+            </div>
+
+            <div id="checkbox-recherche-sortie" class="col-sm-4">
+{#                <div class="text-center  nom-date-recherche">#}
+{#                    {{ app.user.pseudo }}#}
+{#                </div>#}
+{#                <div class="text-center nom-date-recherche">#}
+{#                    {{ "now"|date("d/m/Y") }}#}
+{#                </div>#}
+                {{ form_row(rechercheSortieForm.organiseesParMoi) }}
+                {{ form_row(rechercheSortieForm.jeSuisInscrit) }}
+                {{ form_row(rechercheSortieForm.nonInscrit) }}
+                {{ form_row(rechercheSortieForm.sortiesPassees) }}
+                {{ form_end(rechercheSortieForm) }}
+            </div>
         </div>
 
 
-        {{ form_end(rechercheSortieForm) }}
 
     </div>
 

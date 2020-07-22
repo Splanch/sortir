@@ -73,26 +73,34 @@ form {
     padding: 5px;
 }
 
-#infosSortie {
-    background-color: #DDDDDD;
-    display: block;
-    border-radius: 10px;
-}
-
 #descriptionSortie {
     display: block;
     border-radius: 10px;
-    background-color: #DDDDDD;
+    /*background-color: #DDDDDD;*/
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: justify;
+
 }
 
 #infosPratiques {
     display: block;
     border-radius: 10px;
-    background-color: #DDDDDD;
+    /*background-color: #DDDDDD;*/
     margin-top: 5%;
 }
 
-h6, h3, h2 {
+.my-4 {
+    width: 50%;
+}
+
+#liste-participants {
+    text-align: center;
+    width: 75%;
+
+}
+
+h6, h4, h2 {
     text-align: center;
 }
 
@@ -103,6 +111,24 @@ h6, h3, h2 {
     font-size: 1.2rem;
     border-radius: 5px;
 
+}
+
+#date-participant {
+    float: right;
+    width: 20%;
+}
+
+#recherche_sortie_rechercher {
+    float: right;
+    margin-right: 5%;
+}
+
+#checkbox-recherche-sortie > div > .col-sm-2{
+    display: none;
+}
+
+#alerte-annulation {
+    text-align: center;
 }
 
 a{
@@ -117,3 +143,6 @@ a:hover{
 p{
     font-weight: lighter;
 }
+
+
+

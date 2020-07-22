@@ -30,7 +30,7 @@ class RechercheSortieType extends AbstractType
                 }
             ])
             ->add('keywords', SearchType::class, [
-                'label' => 'Le nom de la sortie contient : '
+                'label' => 'Mot-clé : '
             ])
             ->add('dateDebut', DateType::class, [
                 'format' => 'dd MM yyyy',
