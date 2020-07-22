@@ -65,30 +65,79 @@ class AppFixtures extends Fixture
 
         $lieu1 = new Lieu();
         $lieu1->setNom('Tour Eiffel');
-        $lieu1->setRue($faker->streetName);
-        $lieu1->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu1->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu1->setVille($allVilles[rand(0, 2)]);
+        $lieu1->setRue('Champ de Mars, 5 Avenue Anatole France');
+        $lieu1->setLongitude('2.294481');
+        $lieu1->setLatitude('48.858370');
+        $lieu1->setVille($ville1);
         $manager->persist($lieu1);
 
         $lieu2 = new Lieu();
         $lieu2->setNom('Le Louvre');
-        $lieu2->setRue($faker->streetName);
-        $lieu2->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu2->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu2->setVille($allVilles[rand(0, 2)]);
+        $lieu2->setRue('Rue de Rivoli');
+        $lieu2->setLongitude('2.334595');
+        $lieu2->setLatitude('48.864824');
+        $lieu2->setVille($ville1);
         $manager->persist($lieu2);
 
         $lieu3 = new Lieu();
-        $lieu3->setNom('Le Vieux Port');
-        $lieu3->setRue($faker->streetName);
-        $lieu3->setLongitude($faker->longitude($min = -180, $max = 180));
-        $lieu3->setLatitude($faker->latitude($min = -90, $max = 90));
-        $lieu3->setVille($allVilles[rand(0, 2)]);
+        $lieu3->setNom('Arc de Triomphe');
+        $lieu3->setRue('Place Charles de Gaulle');
+        $lieu3->setLongitude('2.295');
+        $lieu3->setLatitude('48.8738');
+        $lieu3->setVille($ville1);
         $manager->persist($lieu3);
         $manager->flush();
 
-        $allLieux = array($lieu1, $lieu2, $lieu3);
+        $lieu4 = new Lieu();
+        $lieu4->setNom('Basilique de Fourvière');
+        $lieu4->setRue('8 Place de Fourvière');
+        $lieu4->setLongitude('4.819929');
+        $lieu4->setLatitude('45.760683');
+        $lieu4->setVille($ville2);
+        $manager->persist($lieu4);
+
+        $lieu5 = new Lieu();
+        $lieu5->setNom('Parc de la Tête d\'Or');
+        $lieu5->setRue('Boulevard de Stalingrad');
+        $lieu5->setLongitude('45.75');
+        $lieu5->setLatitude('4.85');
+        $lieu5->setVille($ville2);
+        $manager->persist($lieu5);
+
+        $lieu6 = new Lieu();
+        $lieu6->setNom('Théâtres romains');
+        $lieu6->setRue('Rue de l\'Antiquaille');
+        $lieu6->setLongitude('4.820088');
+        $lieu6->setLatitude('45.760703');
+        $lieu6->setVille($ville2);
+        $manager->persist($lieu6);
+        $manager->flush();
+
+        $lieu7 = new Lieu();
+        $lieu7->setNom('Vieux-Port');
+        $lieu7->setRue('Quai des Belges');
+        $lieu7->setLongitude('5.374298');
+        $lieu7->setLatitude('43.295160');
+        $lieu7->setVille($ville3);
+        $manager->persist($lieu7);
+
+        $lieu8 = new Lieu();
+        $lieu8->setNom('Basilique Notre-Dame de la Garde');
+        $lieu8->setRue('Rue Fort du Sanctuaire');
+        $lieu8->setLongitude('5.371234');
+        $lieu8->setLatitude('43.283961');
+        $lieu8->setVille($ville3);
+        $manager->persist($lieu8);
+
+        $lieu9 = new Lieu();
+        $lieu9->setNom('Château d\'If');
+        $lieu9->setRue('Ile d\'If');
+        $lieu9->setLongitude('5.325958');
+        $lieu9->setLatitude('43.280213');
+        $lieu9->setVille($ville3);
+        $manager->persist($lieu9);
+        $manager->flush();
+        $allLieux = array($lieu1, $lieu2, $lieu3, $lieu4, $lieu5, $lieu6, $lieu7, $lieu8, $lieu9);
         $allParticipants = array();
 
 
@@ -149,12 +198,12 @@ class AppFixtures extends Fixture
         $finInscription = new DateTime();
 
         $sortie1 = new Sortie();
-        $sortie1->setNom('Sortie En Création');
+        $sortie1->setNom('Poterie en Deltaplane');
         $sortie1->setDateHeureDebut($heureDebut->modify('+10 day'));
         $sortie1->setDuree(180);
         $sortie1->setDateLimiteInscription($finInscription->modify('+8 day'));
         $sortie1->setNbInscriptionsMax(20);
-        $sortie1->setInfosSortie($faker->realText($maxNbChars = 200, $indexSize = 2));
+        $sortie1->setInfosSortie('Prendre de la hauteur, admirer la vue, tout en fabriquant son vase en terre, rien de mieux pour se changer les idées [Sortie En Création]');
         $sortie1->setEtat($creation);
         $sortie1->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie1->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -163,12 +212,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie2 = new Sortie();
-        $sortie2->setNom('Sortie Ouverte pas d\'inscrits');
+        $sortie2->setNom('Rock Party');
         $sortie2->setDateHeureDebut($heureDebut->modify('+12 day'));
         $sortie2->setDuree(120);
         $sortie2->setDateLimiteInscription($finInscription->modify('+7 day'));
         $sortie2->setNbInscriptionsMax(30);
-        $sortie2->setInfosSortie($faker->realText($maxNbChars = 250, $indexSize = 2));
+        $sortie2->setInfosSortie('Tu aimes le jeu du Caillou, tu n\'a pas peur d\'affronter Cadock, alors viens danser et jetter des cailloux avec nous... Elle est où la poulette ?  [Sortie Ouverte pas d\'inscrits]');
         $sortie2->setEtat($ouverte);
         $sortie2->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie2->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -177,12 +226,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie3 = new Sortie();
-        $sortie3->setNom('Sortie ouverte avec inscrits');
+        $sortie3->setNom('Aquaponie et Aquaponey');
         $sortie3->setDateHeureDebut($heureDebut->modify('+14 day'));
         $sortie3->setDuree(120);
         $sortie3->setDateLimiteInscription($finInscription->modify('+5 day'));
         $sortie3->setNbInscriptionsMax(25);
-        $sortie3->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
+        $sortie3->setInfosSortie('Chevaucher les cheveux dans l\'étang entouré de bancs de poissons. Se reposer entre les cultures de salade et tomates. Viens tester avec nous l\'aquaponie en aquaponey [Sortie ouverte avec inscrits]');
         $sortie3->setEtat($ouverte);
         $sortie3->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie3->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -194,12 +243,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie4 = new Sortie();
-        $sortie4->setNom('Sortie clôturée car nombre max d\'inscrits atteint');
+        $sortie4->setNom('Ptit godet');
         $sortie4->setDateHeureDebut($heureDebut->modify('+5 day'));
         $sortie4->setDuree(180);
         $sortie4->setDateLimiteInscription($finInscription->modify('+4 day'));
         $sortie4->setNbInscriptionsMax(10);
-        $sortie4->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
+        $sortie4->setInfosSortie('Boire un verre ou deux ou trois[Sortie clôturée car nombre max d\'inscrits atteint]');
         $sortie4->setEtat($cloturee);
         $sortie4->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie4->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -211,12 +260,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie5 = new Sortie();
-        $sortie5->setNom('Sortie clôturée car date inscription dépassée');
+        $sortie5->setNom('Partie de Loup Garous');
         $sortie5->setDateHeureDebut($heureDebut->modify('+1 day'));
         $sortie5->setDuree(180);
         $sortie5->setDateLimiteInscription($finInscription->modify('-1 day'));
         $sortie5->setNbInscriptionsMax(15);
-        $sortie5->setInfosSortie($faker->realText($maxNbChars = 200, $indexSize = 2));
+        $sortie5->setInfosSortie('Thierecelieux est ton village préféré ? Viens on sera bien bien bien bien ! ');
         $sortie5->setEtat($cloturee);
         $sortie5->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie5->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -228,12 +277,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie6 = new Sortie();
-        $sortie6->setNom('Sortie en cours');
+        $sortie6->setNom('Sortie entre ennemis');
         $sortie6->setDateHeureDebut($heureDebut->modify('-1 hour'));
         $sortie6->setDuree(240);
         $sortie6->setDateLimiteInscription($finInscription->modify('-1 day'));
         $sortie6->setNbInscriptionsMax(17);
-        $sortie6->setInfosSortie($faker->realText($maxNbChars = 100, $indexSize = 2));
+        $sortie6->setInfosSortie('Pour ceux qui déteste les autres, mais que sortir tout seul c\'est quand même moins fun[Sortie en cours]');
         $sortie6->setEtat($enCours);
         $sortie6->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie6->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -245,12 +294,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie7 = new Sortie();
-        $sortie7->setNom('Sortie terminée depuis moins d\'un mois');
+        $sortie7->setNom('On va s\'coder ! ');
         $sortie7->setDateHeureDebut($heureDebut->modify('-15 day'));
         $sortie7->setDuree(240);
         $sortie7->setDateLimiteInscription($finInscription->modify('-18 day'));
         $sortie7->setNbInscriptionsMax(23);
-        $sortie7->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
+        $sortie7->setInfosSortie('Sur un Mac ou sur un PC');
         $sortie7->setEtat($terminee);
         $sortie7->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie7->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -262,12 +311,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie8 = new Sortie();
-        $sortie8->setNom('Sortie terminée depuis plus d\'un mois');
+        $sortie8->setNom('Sortie Archivée ');
         $sortie8->setDateHeureDebut($heureDebut->modify('-45 day'));
         $sortie8->setDuree(240);
         $sortie8->setDateLimiteInscription($finInscription->modify('-48 day'));
         $sortie8->setNbInscriptionsMax(12);
-        $sortie8->setInfosSortie($faker->realText($maxNbChars = 180, $indexSize = 2));
+        $sortie8->setInfosSortie('Sortie archivée donc c\'est pas grave');
         $sortie8->setEtat($historisee);
         $sortie8->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie8->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -279,12 +328,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie9 = new Sortie();
-        $sortie9->setNom('Sortie annulée mais pas encore archivée');
+        $sortie9->setNom('Aprèm Switch et Sandwich');
         $sortie9->setDateHeureDebut($heureDebut->modify('-20 day'));
         $sortie9->setDuree(240);
         $sortie9->setDateLimiteInscription($finInscription->modify('-23 day'));
         $sortie9->setNbInscriptionsMax(10);
-        $sortie9->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
+        $sortie9->setInfosSortie('Manger et jouer à mario Kart, c\'est ça le bonheur');
         $sortie9->setEtat($annulee);
         $sortie9->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie9->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -296,12 +345,12 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $sortie10 = new Sortie();
-        $sortie10->setNom('Sortie annulée et archivée');
+        $sortie10->setNom('Bal Masqué Ohé ohé - Soirée Covid');
         $sortie10->setDateHeureDebut($heureDebut->modify('-40 day'));
         $sortie10->setDuree(240);
         $sortie10->setDateLimiteInscription($finInscription->modify('-45 day'));
         $sortie10->setNbInscriptionsMax(10);
-        $sortie10->setInfosSortie($faker->realText($maxNbChars = 150, $indexSize = 2));
+        $sortie10->setInfosSortie('Apport ton plus beau masque, tenue sanitaire exigée');
         $sortie10->setEtat($historisee);
         $sortie10->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie10->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
