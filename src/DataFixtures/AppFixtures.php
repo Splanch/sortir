@@ -230,13 +230,13 @@ class AppFixtures extends Fixture
         $sortie3->setDateHeureDebut($heureDebut->modify('+14 day'));
         $sortie3->setDuree(120);
         $sortie3->setDateLimiteInscription($finInscription->modify('+5 day'));
-        $sortie3->setNbInscriptionsMax(25);
+        $sortie3->setNbInscriptionsMax(15);
         $sortie3->setInfosSortie('Chevaucher les cheveux dans l\'étang entouré de bancs de poissons. Se reposer entre les cultures de salades et tomates. Viens tester avec nous l\'aquaponie en aquaponey [Sortie ouverte avec inscrits]');
         $sortie3->setEtat($ouverte);
         $sortie3->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie3->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
         $sortie3->setCampus($allCampus[rand(0, sizeof($allCampus) - 1)]);
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 16; $i++) {
             $sortie3->addParticipant($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         }
         $manager->persist($sortie3);
