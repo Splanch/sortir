@@ -1,18 +1,6 @@
 {% extends 'layout.html.twig' %}
 
 {% block main %}
-    <div id="date-participant" class="container">
-{#        <div class="row justify-content-center">#}
-{#            <div class="text-center  nom-date-recherche">#}
-{#                {{ app.user.pseudo }}#}
-{#            </div>#}
-{#            <div class="text-center nom-date-recherche">#}
-{#              {{ "now"|date("d/m/Y") }}#}
-{#            </div>#}
-
-{#        </div>#}
-    </div>
-
     <div>
         <div class="row">
             <div class="col-sm-8"><h5>Filtrer les sorties</h5></div>
@@ -24,7 +12,6 @@
                 </div>
             </div>
         </div>
-{#        <h5>Filtrer les sorties</h5>#}
         {{ form_start(rechercheSortieForm,{'attr': {novalidate : 'novalidate'}}) }}
         <div class="row">
             <div class="col-sm-8">
@@ -35,14 +22,7 @@
                     <div class="col-sm-6">{{ form_row(rechercheSortieForm.dateFin) }}</div>
                 </div>
             </div>
-
             <div id="checkbox-recherche-sortie" class="col-sm-4">
-{#                <div class="text-center  nom-date-recherche">#}
-{#                    {{ app.user.pseudo }}#}
-{#                </div>#}
-{#                <div class="text-center nom-date-recherche">#}
-{#                    {{ "now"|date("d/m/Y") }}#}
-{#                </div>#}
                 {{ form_row(rechercheSortieForm.organiseesParMoi) }}
                 {{ form_row(rechercheSortieForm.jeSuisInscrit) }}
                 {{ form_row(rechercheSortieForm.nonInscrit) }}
@@ -50,11 +30,7 @@
                 {{ form_end(rechercheSortieForm) }}
             </div>
         </div>
-
-
-
     </div>
-
     <div id="affichage-sorties">
         {% if (sorties is empty) %}
         <h3 class="text-center"> Pas de sorties trouvées</h3>
