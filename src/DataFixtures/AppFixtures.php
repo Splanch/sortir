@@ -217,7 +217,7 @@ class AppFixtures extends Fixture
         $sortie2->setDuree(120);
         $sortie2->setDateLimiteInscription($finInscription->modify('+7 day'));
         $sortie2->setNbInscriptionsMax(30);
-        $sortie2->setInfosSortie('Tu aimes le jeu du Caillou, tu n\'a pas peur d\'affronter Cadock, alors viens danser et jetter des cailloux avec nous... Elle est où la poulette ?  [Sortie Ouverte pas d\'inscrits]');
+        $sortie2->setInfosSortie('Tu aimes le jeu du Caillou, tu n\'a pas peur d\'affronter Cadock, alors viens danser et jeter des cailloux avec nous... Elle est où la poulette ?  [Sortie Ouverte pas d\'inscrits]');
         $sortie2->setEtat($ouverte);
         $sortie2->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie2->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -231,7 +231,7 @@ class AppFixtures extends Fixture
         $sortie3->setDuree(120);
         $sortie3->setDateLimiteInscription($finInscription->modify('+5 day'));
         $sortie3->setNbInscriptionsMax(25);
-        $sortie3->setInfosSortie('Chevaucher les cheveux dans l\'étang entouré de bancs de poissons. Se reposer entre les cultures de salade et tomates. Viens tester avec nous l\'aquaponie en aquaponey [Sortie ouverte avec inscrits]');
+        $sortie3->setInfosSortie('Chevaucher les cheveux dans l\'étang entouré de bancs de poissons. Se reposer entre les cultures de salades et tomates. Viens tester avec nous l\'aquaponie en aquaponey [Sortie ouverte avec inscrits]');
         $sortie3->setEtat($ouverte);
         $sortie3->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie3->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -248,7 +248,7 @@ class AppFixtures extends Fixture
         $sortie4->setDuree(180);
         $sortie4->setDateLimiteInscription($finInscription->modify('+4 day'));
         $sortie4->setNbInscriptionsMax(10);
-        $sortie4->setInfosSortie('Boire un verre ou deux ou trois[Sortie clôturée car nombre max d\'inscrits atteint]');
+        $sortie4->setInfosSortie('Boire un verre ou deux ou trois [Sortie clôturée car nombre max d\'inscrits atteint]');
         $sortie4->setEtat($cloturee);
         $sortie4->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie4->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
@@ -282,7 +282,7 @@ class AppFixtures extends Fixture
         $sortie6->setDuree(240);
         $sortie6->setDateLimiteInscription($finInscription->modify('-1 day'));
         $sortie6->setNbInscriptionsMax(17);
-        $sortie6->setInfosSortie('Pour ceux qui déteste les autres, mais que sortir tout seul c\'est quand même moins fun[Sortie en cours]');
+        $sortie6->setInfosSortie('Pour ceux qui détestent les autres, mais que sortir tout seul c\'est quand même moins fun [Sortie en cours]');
         $sortie6->setEtat($enCours);
         $sortie6->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie6->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
