@@ -21,6 +21,91 @@
     {{ form_row(creerSortie.annuler) }}
     {{ form_end(creerSortie) }}
 
+{% endblock %}
 
+{% block script %}
+
+    <script>
+        $(document).ready(function() {
+            $(".listevilles").on("change", function(event){
+                var datavilleid = $('.listevilles').val();
+                $.ajax({
+                    url:        'ajax/choixville',
+                    type:       'POST',
+                    dataType:   'json',
+                    async:      true,
+                    data: {villeval:datavilleid,},
+
+                    success: function(data, status) {
+                        $('.listelieux').html('');
+
+                        for(i = 0; i < data.length; i++) {
+                            lieu = data[i];
+
+                            var elem = $('<option value="'+lieu['id']+'" >'+lieu['nom']+'</option>');
+                            $('.listelieux').append(elem);
+                        }
+                        majgeoloc($('.listelieux').val());
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+                $.ajax({
+                    url:        'ajax/cp',
+                    type:       'POST',
+                    dataType:   'json',
+                    async:      true,
+                    data: {villeval:datavilleid,},
+
+                    success: function(data, status) {
+                        $('.infocp').html('');
+
+                        cp = data[0];
+                        $('.infocp').val(cp['cp']);
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            });
+
+            $(".listelieux").on("change", function(event){
+                majgeoloc($('.listelieux').val());
+            });
+        });
+
+        function majgeoloc(datalieuid) {
+            $.ajax({
+                url:        'ajax/geoloc',
+                type:       'POST',
+                dataType:   'json',
+                async:      true,
+                data: {idlieu:datalieuid,},
+
+                success: function(data, status) {
+                    $('.inforue').html('');
+                    $('.infolat').html('');
+                    $('.infolong').html('');
+
+                    info = data[0];
+
+                    if (info === undefined) {
+                        $('.inforue').val('');
+                        $('.infolat').val('');
+                        $('.infolong').val('');
+                    }else {
+                        $('.inforue').val(info['rue']);
+                        $('.infolat').val(info['lat']);
+                        $('.infolong').val(info['long']);
+                    }
+
+                },
+                error : function(xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+            });
+        }
+    </script>
 
 {% endblock %}

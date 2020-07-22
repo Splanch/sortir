@@ -8,6 +8,7 @@ use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,63 +26,61 @@ class SortieFormType extends AbstractType
             ->add('nbInscriptionsMax')
             ->add('duree')
             ->add('infosSortie', TextareaType::class)
-            ->add('campus', TextType::class, [
-                'mapped' => false,
-                'disabled' => true,
+            ->add('campus',TextType::class,[
+                'mapped'=>false,
+                'disabled'=> true,
             ])
-            ->add('ville', EntityType::class, [
+            ->add('ville', EntityType::class,[
                 'class' => Ville::class,
-                'mapped' => false,
-                'label' => 'Ville',
-                'choice_label' => function (Ville $ville) {
-                    return $ville->getNom();
-
-                }
+                'choice_label' => 'nom',
+                'placeholder' => 'Faire votre choix',
+                'attr' => [
+                    'class' => 'listevilles'
+                ]
             ])
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
-                'label' => 'Lieu',
-                'choice_label' => function (Lieu $lieu) {
-                    return $lieu->getNom();
-                }
+            ->add('lieu',ChoiceType::class,[
+                'placeholder' => 'Choisir une ville',
+                'attr' => [
+                    'class' => 'listelieux'
+                ]
             ])
-            ->add('rue', EntityType::class, [
-                'class' => Lieu::class,
-                'mapped' => false,
-                'label' => 'Rue',
-                'choice_label' => function (Lieu $lieu) {
-                    return $lieu->getRue();
-
-                }
+            ->add('rue',TextType::class,[
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'inforue'
+                ]
             ])
-            ->add('codePostal', EntityType::class, [
-                'class' => Lieu::class,
-                'mapped' => false,
-                'label' => 'Code Postal',
-                'choice_label' => function (Lieu $lieu) {
-                    return $lieu->getVille()->getCodePostal();
-                }
+            ->add('codePostal',TextType::class,[
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'infocp'
+                ]
             ])
-            ->add('latitude', TextType::class, [
-                'mapped' => false,
+            ->add('latitude',TextType::class,[
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'infolat'
+                ]
             ])
-            ->add('longitude', TextType::class, [
-                'mapped' => false,
+            ->add('longitude',TextType::class,[
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'infolong'
+                ]
             ])
-            ->add('enregistrer', SubmitType::class)
-            ->add('publier', SubmitType::class)
-            ->add('annuler', ButtonType::class, [
-                'attr' => ['onclick' => 'location.href="/sortir/public/"']
-            ]);
-
-
+            ->add('enregistrer',SubmitType::class)
+            ->add('publier',SubmitType::class)
+            ->add('annuler',ButtonType::class,[
+                'attr'=>['onclick'=>'location.href="/sortir/public/"']
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
-            'user' => null,
+            'user'=>null,
         ]);
     }
 }
