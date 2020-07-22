@@ -4,7 +4,9 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\AnnulerSortieType;
 use App\Form\RechercheSortieType;
 use App\Form\SortieFormType;
@@ -12,6 +14,7 @@ use App\Form\SortieFormType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -103,11 +106,100 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('sortie_recherche');
 
         }
+
         return $this->render('sortie/creerSortie.html.twig', [
             'controller_name' => 'SortieController',
             'creerSortie' => $form->createView(),
         ]);
+
     }
+
+/***************************************** AJAX ***************************************************************/
+
+    /**
+     * @Route("/sortie/ajax/choixville")
+     */
+    public function choixville(Request $request) {
+        $lieux = $this
+            ->getDoctrine()
+            ->getRepository(Lieu::class)
+            ->findByVille($request->get('villeval'));
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+
+            $jsonData = array();
+            $idx = 0;
+            foreach($lieux as $lieu) {
+
+                $temp = array(
+                    'id' => $lieu->getId(),
+                    'nom' => $lieu->getNom(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+            return new JsonResponse($jsonData);
+        } else {
+            return $this->render('sortie/creerSortie.html.twig');
+        }
+    }
+
+    /**
+     * @Route("/sortie/ajax/cp")
+     */
+    public function recuperationcp(Request $request) {
+        $cps = $this
+            ->getDoctrine()
+            ->getRepository(Ville::class)
+            ->findById($request->get('villeval'));
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+
+            $jsonData = array();
+            $idx = 0;
+            foreach($cps as $cp) {
+
+                $temp = array(
+                    'cp' => $cp->getCodePostal(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+
+            return new JsonResponse($jsonData);
+        } else {
+            return $this->render('sortie/creerSortie.html.twig');
+        }
+    }
+
+    /**
+     * @Route("/sortie/ajax/geoloc")
+     */
+    public function recuperationgeoloc(Request $request) {
+        $geolocs = $this
+            ->getDoctrine()
+            ->getRepository(Lieu::class)
+            ->findById($request->get('idlieu'));
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+
+            $jsonData = array();
+            $idx = 0;
+            foreach($geolocs as $geoloc) {
+
+                $temp = array(
+                    'rue' => $geoloc->getRue(),
+                    'lat' => $geoloc->getLatitude(),
+                    'long' => $geoloc->getLongitude(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+
+            return new JsonResponse($jsonData);
+        } else {
+            return $this->render('sortie/creerSortie.html.twig');
+        }
+    }
+
+    /***************************************** FIN AJAX ***************************************************************/
 
     /**
      * @Route("/sortie/detail/{id}", name="sortie_afficher")
