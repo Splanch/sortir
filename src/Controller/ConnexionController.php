@@ -16,7 +16,7 @@ class ConnexionController extends AbstractController
     {
 
         if ($this->getUser()) {
-             return $this->redirectToRoute('/');
+             return $this->redirectToRoute('sortie_recherche');
         }
 
         // get the login error if there is one
