@@ -84,7 +84,7 @@
                                     {#                                    ANNULER#}
                                     {% if app.user.id == sortie.organisateur.id %}
                                         {% if (sortie.etat.libelle != "Annulée" and sortie.etat.libelle != "Terminée") %}
-                                            <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}">-Annuler</a>
+                                            <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}">- Annuler</a>
                                         {% endif %}
                                     {% endif %}
 
