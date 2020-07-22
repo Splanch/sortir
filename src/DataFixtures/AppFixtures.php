@@ -335,6 +335,7 @@ class AppFixtures extends Fixture
         $sortie9->setNbInscriptionsMax(10);
         $sortie9->setInfosSortie('Manger et jouer à mario Kart, c\'est ça le bonheur');
         $sortie9->setEtat($annulee);
+        $sortie9->setMotifAnnulation('j\'ai déjà manger tous les sandwhichs... desolé du coup c\'est annulé');
         $sortie9->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
         $sortie9->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
         $sortie9->setCampus($allCampus[rand(0, sizeof($allCampus) - 1)]);
