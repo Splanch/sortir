@@ -38,6 +38,7 @@
 {% block script %}
 {% if not modification %}
     <script>
+
         $(document).ready(function() {
             $(".listevilles").on("change", function(event){
                 var datavilleid = $('.listevilles').val();
@@ -46,7 +47,10 @@
                     type:       'POST',
                     dataType:   'json',
                     async:      true,
-                    data: {villeval:datavilleid,},
+                    data: {
+                        villeval:datavilleid,
+                        //test : $('form[name="sortie_form"]').serialize()
+                    },
 
                     success: function(data, status) {
                         $('.listelieux').html('');
@@ -68,7 +72,10 @@
                     type:       'POST',
                     dataType:   'json',
                     async:      true,
-                    data: {villeval:datavilleid,},
+                    data: {
+                        villeval:datavilleid,
+                        //test : $('form[name="sortie_form"]').serialize()
+                    },
 
                     success: function(data, status) {
                         $('.infocp').html('');
@@ -93,7 +100,10 @@
                 type:       'POST',
                 dataType:   'json',
                 async:      true,
-                data: {idlieu:datalieuid,},
+                data: {
+                    idlieu:datalieuid,
+                    //test : $('form[name="sortie_form"]').serialize()
+                },
 
                 success: function(data, status) {
                     $('.inforue').html('');
@@ -118,6 +128,7 @@
                 }
             });
         }
+
     </script>
     {% endif %}
 {% endblock %}

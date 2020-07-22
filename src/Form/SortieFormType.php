@@ -30,9 +30,10 @@ class SortieFormType extends AbstractType
                 'mapped'=>false,
                 'disabled'=> true,
             ])
-            ->add('ville', EntityType::class,[
+            ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'nom',
+                'mapped' => false,
                 'placeholder' => 'Faire votre choix',
                 'attr' => [
                     'class' => 'listevilles'
