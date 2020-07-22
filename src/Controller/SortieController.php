@@ -36,16 +36,21 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $sortieRepo->findAllSorties();
-        foreach ($sorties as $sortie) {
-            //L'etat est un champ calculé d'où l'appel à la fonction getEtat() pour récuperer le bon
-            $sortie->getEtat();
-        }
+
         if ($form->isSubmitted()) {
             $searchParameters = $form->getData();
             $sorties = $sortieRepo->findSortieParametre($user, $searchParameters);
 
         }
 
+        foreach ($sorties as $key => $sortie) {
+            //L'etat est un champ calculé d'où l'appel à la fonction getEtat() pour récuperer le bon
+            $etat = $sortie->getEtat();
+
+            if (($etat->getLibelle() == 'En création') and ($user != $sortie->getOrganisateur())) {
+                unset($sorties[$key]);
+            }
+        }
         return $this->render('sortie/recherche.html.twig', [
             'rechercheSortieForm' => $form->createView(),
             'sorties' => $sorties

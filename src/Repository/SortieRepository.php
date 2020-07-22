@@ -84,7 +84,7 @@ class SortieRepository extends ServiceEntityRepository
             ->join('s.organisateur', 'o')
             ->addSelect('o')
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
 
         return $result;
     }
