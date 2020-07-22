@@ -140,6 +140,70 @@ class AppFixtures extends Fixture
         $allLieux = array($lieu1, $lieu2, $lieu3, $lieu4, $lieu5, $lieu6, $lieu7, $lieu8, $lieu9);
         $allParticipants = array();
 
+        /*Participants définis*/
+        $participant1 = new Participant();
+        $participant1->setPrenom('Ludovic');
+        $participant1->setNom('Déan');
+        $participant1->setTelephone($faker->phoneNumber);
+        $participant1->setEmail($faker->email);
+        $hash = $this->passwordEncoder->encodePassword($participant1, "password");
+        $participant1->setPassword($hash);
+        $participant1->setActif(True);
+        $participant1->setRoles(array('ROLE_ADMIN'));
+        $participant1->setAdministrateur(True);
+        $participant1->setPseudo('Ludo');
+        $participant1->setRattacheA($allCampus[rand(0, 2)]);
+        $participant1->setActif(True);
+        $manager->persist($participant1);
+        $manager->flush();
+
+        $participant2 = new Participant();
+        $participant2->setPrenom('Dominika');
+        $participant2->setNom('Sliwa');
+        $participant2->setTelephone($faker->phoneNumber);
+        $participant2->setEmail($faker->email);
+        $hash = $this->passwordEncoder->encodePassword($participant2, "password");
+        $participant2->setPassword($hash);
+        $participant2->setActif(True);
+        $participant2->setRoles(array('ROLE_USER'));
+        $participant2->setAdministrateur(False);
+        $participant2->setPseudo('Chlorella');
+        $participant2->setRattacheA($allCampus[rand(0, 2)]);
+        $participant2->setActif(True);
+        $manager->persist($participant2);
+        $manager->flush();
+
+        $participant3 = new Participant();
+        $participant3->setPrenom('Jean');
+        $participant3->setNom('Rupin');
+        $participant3->setTelephone($faker->phoneNumber);
+        $participant3->setEmail($faker->email);
+        $hash = $this->passwordEncoder->encodePassword($participant3, "password");
+        $participant3->setPassword($hash);
+        $participant3->setActif(True);
+        $participant3->setRoles(array('ROLE_USER'));
+        $participant3->setAdministrateur(True);
+        $participant3->setPseudo('Splanch');
+        $participant3->setRattacheA($allCampus[rand(0, 2)]);
+        $participant3->setActif(True);
+        $manager->persist($participant3);
+        $manager->flush();
+
+        $participant4 = new Participant();
+        $participant4->setPrenom('Matthieu');
+        $participant4->setNom('De Lajarte');
+        $participant4->setTelephone($faker->phoneNumber);
+        $participant4->setEmail($faker->email);
+        $hash = $this->passwordEncoder->encodePassword($participant4, "password");
+        $participant4->setPassword($hash);
+        $participant4->setActif(True);
+        $participant4->setRoles(array('ROLE_ADMIN'));
+        $participant4->setAdministrateur(True);
+        $participant4->setPseudo('ElPresidente');
+        $participant4->setRattacheA($allCampus[rand(0, 2)]);
+        $participant4->setActif(True);
+        $manager->persist($participant4);
+        $manager->flush();
 
         for ($i = 0; $i < 50; $i++) {
             $participant = new Participant();
@@ -205,7 +269,7 @@ class AppFixtures extends Fixture
         $sortie1->setNbInscriptionsMax(20);
         $sortie1->setInfosSortie('Prendre de la hauteur, admirer la vue, tout en fabriquant son vase en terre, rien de mieux pour se changer les idées [Sortie En Création]');
         $sortie1->setEtat($creation);
-        $sortie1->setOrganisateur($allParticipants[rand(0, sizeof($allParticipants) - 1)]);
+        $sortie1->setOrganisateur(/*$allParticipants[rand(0, sizeof($allParticipants) - 1)]*/$participant4);
         $sortie1->setLieu($allLieux[rand(0, sizeof($allLieux) - 1)]);
         $sortie1->setCampus($allCampus[rand(0, sizeof($allCampus) - 1)]);
         $manager->persist($sortie1);
