@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -220,6 +221,32 @@ class Sortie
 
     public function getEtat(): ?Etat
     {
+        $date = new DateTime();
+        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+        $dateDeFinSortie = clone $this->getDateHeureDebut();
+        $dateDeFinSortie->modify('+' . $this->getDuree() . 'minutes');
+        $etat = new Etat();
+
+        if ($this->etat->getLibelle() == 'Historisée'
+            or $this->etat->getLibelle() == 'En création'
+            or $this->etat->getLibelle() == 'Annulée') {
+            return $this->etat;
+        } else {
+            if ($date > $this->getDateHeureDebut() and $date < $dateDeFinSortie) {
+                $etat->setLibelle('En Cours');
+                $this->setEtat($etat);
+
+            } elseif ($dateDeFinSortie < $date) {
+                $etat->setLibelle('Terminée');
+                $this->setEtat($etat);
+
+            } elseif ((sizeof($this->getParticipants()) == $this->getNbInscriptionsMax()) or $date > $this->getdateLimiteInscription()) {
+                $etat->setLibelle('Clôturée');
+                $this->setEtat($etat);
+
+            }
+            return $this->etat;
+        }
         return $this->etat;
     }
 

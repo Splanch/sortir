@@ -36,39 +36,16 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sorties = $sortieRepo->findAllSorties();
-        $date = new DateTime();
-        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
         foreach ($sorties as $sortie) {
-            $dateDeFinSortie = clone $sortie->getDateHeureDebut();
-            $dateDeFinSortie->modify('+' . $sortie->getDuree() . 'minutes');
-            $etat = new Etat();
-
-            if ($sortie->getEtat()->getLibelle() == 'Historisée'
-                or $sortie->getEtat()->getLibelle() == 'En Création'
-                or $sortie->getEtat()->getLibelle() == 'Annulée') {
-                break;
-            } else {
-                if ($date > $sortie->getDateHeureDebut() and $date < $dateDeFinSortie) {
-                    $etat->setLibelle('En Cours');
-                    $sortie->setEtat($etat);
-                    break;
-                } elseif ($dateDeFinSortie < $date) {
-                    $etat->setLibelle('Terminée');
-                    $sortie->setEtat($etat);
-                    break;
-                } elseif ((sizeof($sortie->getParticipants()) == $sortie->getNbInscriptionsMax()) or $date > $sortie->getdateLimiteInscription()) {
-                    $etat->setLibelle('Clôturée');
-                    $sortie->setEtat($etat);
-                    break;
-                }
-
-            }
+            //L'etat est un champ calculé d'où l'appel à la fonction getEtat() pour récuperer le bon
+            $sortie->getEtat();
         }
         if ($form->isSubmitted()) {
             $searchParameters = $form->getData();
             $sorties = $sortieRepo->findSortieParametre($user, $searchParameters);
 
         }
+
         return $this->render('sortie/recherche.html.twig', [
             'rechercheSortieForm' => $form->createView(),
             'sorties' => $sorties
@@ -114,12 +91,13 @@ class SortieController extends AbstractController
 
     }
 
-/***************************************** AJAX ***************************************************************/
+    /***************************************** AJAX ***************************************************************/
 
     /**
      * @Route("/sortie/ajax/choixville")
      */
-    public function choixville(Request $request) {
+    public function choixville(Request $request)
+    {
         $lieux = $this
             ->getDoctrine()
             ->getRepository(Lieu::class)
@@ -129,7 +107,7 @@ class SortieController extends AbstractController
 
             $jsonData = array();
             $idx = 0;
-            foreach($lieux as $lieu) {
+            foreach ($lieux as $lieu) {
 
                 $temp = array(
                     'id' => $lieu->getId(),
@@ -146,7 +124,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/ajax/cp")
      */
-    public function recuperationcp(Request $request) {
+    public function recuperationcp(Request $request)
+    {
         $cps = $this
             ->getDoctrine()
             ->getRepository(Ville::class)
@@ -156,7 +135,7 @@ class SortieController extends AbstractController
 
             $jsonData = array();
             $idx = 0;
-            foreach($cps as $cp) {
+            foreach ($cps as $cp) {
 
                 $temp = array(
                     'cp' => $cp->getCodePostal(),
@@ -173,7 +152,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/ajax/geoloc")
      */
-    public function recuperationgeoloc(Request $request) {
+    public function recuperationgeoloc(Request $request)
+    {
         $geolocs = $this
             ->getDoctrine()
             ->getRepository(Lieu::class)
@@ -183,7 +163,7 @@ class SortieController extends AbstractController
 
             $jsonData = array();
             $idx = 0;
-            foreach($geolocs as $geoloc) {
+            foreach ($geolocs as $geoloc) {
 
                 $temp = array(
                     'rue' => $geoloc->getRue(),
@@ -217,15 +197,11 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier")
      */
-    public function modifier($id, UserInterface $user, Request $request) :Response
+    public function modifier($id, UserInterface $user, Request $request): Response
     {
-        if (!$user) {
-            return $this->render('security/login.html.twig');
-        }
-
 
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie= $sortieRepo->find($id);
+        $sortie = $sortieRepo->find($id);
 
         $form = $this->createForm(SortieFormType::class, $sortie);
         $form->handleRequest($request);
@@ -239,8 +215,10 @@ class SortieController extends AbstractController
         $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $etatOuvert = $etatRepo->findOneByLibelle('Ouverte');
 
-        if($user!=$organisateur or $etat!=$etatEnCreation){
+        if ($user != $organisateur or $etat != $etatEnCreation) {
+            $this->addFlash('warning', 'Vous n\'avez pas l\'autorisation pour accéder à cette page');
             return $this->redirectToRoute('sortie_recherche');
+
         }
 
         $dateSortie = $sortie->getDateHeureDebut();
@@ -263,7 +241,7 @@ class SortieController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('sortie_recherche');
 
-            }else {
+            } else {
                 $this->addFlash('warning', 'Veuillez modifiez les dates !');
             }
 
@@ -280,8 +258,16 @@ class SortieController extends AbstractController
      */
     public function annuler($id, Request $request): Response
     {
+
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortieInfos = $sortieRepo->find($id);
+        $organisateur = $sortieInfos->getOrganisateur();
+        $userConnecte = $this->getUser();
+        if ($userConnecte != $organisateur) {
+            $this->addFlash('warning', 'Vous n\'avez pas l\'autorisation pour accéder à cette page');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+
 //        recuperation d'état "Annulée"
         $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $annulee = $etatRepo->findOneByLibelle('Annulée');
@@ -314,6 +300,12 @@ class SortieController extends AbstractController
     {
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $sortieRepo->find($id);
+
+        if ($sortie->getEtat()->getLibelle() != 'Ouverte') {
+            $this->addFlash('warning', 'Vous n\'avez pas l\'autorisation pour accéder à cette page');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+
         $sortie->addParticipant($user);
         $manager->persist($sortie);
         $manager->flush();
@@ -329,11 +321,20 @@ class SortieController extends AbstractController
     {
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $sortieRepo->find($id);
-        $sortie->removeParticipant($user);
-        $manager->persist($sortie);
-        $manager->flush();
-        $this->addFlash('success', 'Vous vous êtes désisté !');
-        return $this->redirectToRoute('sortie_recherche');
+        $etat = $sortie->getEtat();
+        $date = new DateTime();
+        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+        if (($etat->getLibelle() == 'Ouverte') or
+            ($etat->getLibelle() == 'Clôturé')) {
+            $sortie->removeParticipant($user);
+            $manager->persist($sortie);
+            $manager->flush();
+            $this->addFlash('success', 'Vous vous êtes désisté !');
+            return $this->redirectToRoute('sortie_recherche');
+        } else {
+            $this->addFlash('warning', 'Vous n\'avez pas l\'autorisation pour accéder à cette page');
+            return $this->redirectToRoute('sortie_recherche');
+        }
     }
 
     /**
@@ -356,7 +357,7 @@ class SortieController extends AbstractController
         $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $etatOuvert = $etatRepo->findOneByLibelle('Ouverte');
 
-        if($user!=$organisateur or $etat!=$etatEnCreation){
+        if ($user != $organisateur or $etat != $etatEnCreation) {
             return $this->redirectToRoute('sortie_recherche');
         }
 
@@ -376,8 +377,6 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('sortie_recherche');
 
         }
-
-
 
 
     }
