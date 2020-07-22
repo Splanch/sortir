@@ -21,61 +21,63 @@ body {
     width: auto;
 }
 
-form{
+form {
     padding-top: 2vh;
     padding-bottom: 2vh;
 }
 
-.form-title{
+.form-title {
     text-align: center;
     margin-bottom: 2vh;
 }
 
-.btn-primary{
-    background-color: #f9a927 ;
-    border : none;
+.btn-primary {
+    background-color: #f9a927;
+    border: none;
 
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background-color: #ff8e0a;
 }
 
-.tableResult{
+.tableResult {
     max-height: 300px;
     overflow-y: auto;
     margin-bottom: 3vh;
 
 }
-.tableResult thead th{
-    position:sticky;
-    top:0;
+
+.tableResult thead th {
+    position: sticky;
+    top: 0;
 }
 
-#btn-creer-sortie{
+#btn-creer-sortie {
     padding-bottom: 2vh;
     margin-bottom: 1vh;
 }
 
-#nomSortie{
+#nomSortie {
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table-hover tbody tr:hover
-{
-   background-color: #f9a927 ;
+.table-hover tbody tr:hover {
+    background-color: #ffad28;
+}
+
+#sortie-infos {
+    padding: 5px;
 }
 
 #infosSortie {
     background-color: #DDDDDD;
     display: block;
     border-radius: 10px;
-    margin-left: 1%;
-    margin-right: 1%;
-    }
+}
 
 #descriptionSortie {
     display: block;
@@ -86,13 +88,32 @@ form{
 #infosPratiques {
     display: block;
     border-radius: 10px;
-    margin-left: 1%;
-    margin-right: 1%;
     background-color: #DDDDDD;
+    margin-top: 5%;
 }
 
 h6, h3, h2 {
     text-align: center;
-    margin-top: 2%;
 }
 
+.nom-date-recherche {
+    background-color: #f9a927;
+    color: white;
+    margin: 2vh;
+    font-size: 1.2rem;
+    border-radius: 5px;
+
+}
+
+a{
+
+    font-weight: lighter;
+}
+
+a:hover{
+
+}
+
+p{
+    font-weight: lighter;
+}

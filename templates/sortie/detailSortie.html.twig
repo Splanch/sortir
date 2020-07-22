@@ -31,12 +31,13 @@
                 <div class="col-sm-6"><label>Campus : </label></div><div class="col-sm-6"> {{ sortieInfos.campus.nom }}</div>
             </div>
         </div>
+        <div class="col-sm-1"></div>
         <div class="col-sm-6">
             <div id="descriptionSortie" class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <h3>Pour quoi faire ???</h3>
                 </div>
-                <div class="col-sm"> {{ sortieInfos.infosSortie }}</div>
+                <div class="col-sm-12"> {{ sortieInfos.infosSortie }}</div>
             </div>
         </div>
     </div>
@@ -61,18 +62,17 @@
         </div>
         <div class="row">
             <div class="col-sm-3"></div>
+            <div class="col-sm-3"><label>Ville : </label></div><div class="col-sm-3"> {{ sortieInfos.lieu.ville.nom }}</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
             <div class="col-sm-3"><label>Latitude : </label></div><div class="col-sm-3"> {{ sortieInfos.lieu.latitude }}</div>
             <div class="col-sm-3"></div>
         </div>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-3"><label>Longitude : </label></div><div class="col-sm-3"> {{ sortieInfos.lieu.longitude }}</div>
-            <div class="col-sm-3"></div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"><label>Organisateur : </label></div><div class="col-sm-3"><a href="{{ path('profil_afficher', {'id': sortieInfos.organisateur.id}) }}">
-                    {{ sortieInfos.organisateur.pseudo }}</a></div>
             <div class="col-sm-3"></div>
         </div>
     </div>

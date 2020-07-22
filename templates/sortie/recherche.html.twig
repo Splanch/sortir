@@ -1,9 +1,16 @@
 {% extends 'layout.html.twig' %}
 
 {% block main %}
-    <div id="date-participant">
-        <h4> Date du jour: {{ "now"|date("d/m/Y") }}</h4>
-        <h4> Participant : {{ app.user.pseudo }}</h4>
+    <div id="date-participant" class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-4 text-center  nom-date-recherche">
+                {{ app.user.pseudo }}
+            </div>
+            <div class="col-sm-4 text-center nom-date-recherche">
+              {{ "now"|date("d/m/Y") }}
+            </div>
+
+        </div>
     </div>
 
     <div>
@@ -77,7 +84,7 @@
                                     {#                                    ANNULER#}
                                     {% if app.user.id == sortie.organisateur.id %}
                                         {% if (sortie.etat.libelle != "Annulée" and sortie.etat.libelle != "Terminée") %}
-                                            <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}">-Annuler</a>
+                                            <a href="{{ path('sortie_annuler',{'id':sortie.id}) }}">- Annuler</a>
                                         {% endif %}
                                     {% endif %}
 
