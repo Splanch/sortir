@@ -60,7 +60,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/creer", name="sortie_creer")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, $modification=false): Response
     {
 
         $organisateur = $this->getUser();
@@ -92,6 +92,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/creerSortie.html.twig', [
             'controller_name' => 'SortieController',
             'creerSortie' => $form->createView(),
+            'modification'=> $modification
         ]);
 
     }
@@ -202,7 +203,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier")
      */
-    public function modifier($id, UserInterface $user, Request $request): Response
+    public function modifier($id, UserInterface $user, $modification=true, Request $request): Response
     {
 
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
@@ -254,7 +255,8 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/modifierSortie.html.twig', [
             'controller_name' => 'SortieController',
-            'modifierSortie' => $form->createView()
+            'creerSortie' => $form->createView(),
+            'modification'=>$modification
         ]);
     }
 
@@ -382,7 +384,34 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('sortie_recherche');
 
         }
+    }
+
+
+    /**
+     * @Route("sortie/supprimer/{id}", name="supprimer")
+     */
+    public function supprimer($id, UserInterface $user, EntityManagerInterface $manager)
+    {
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+
+        $organisateur = $sortie->getOrganisateur();
+        $etat = $sortie->getEtat();
+//       état "En création"
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatEnCreation = $etatRepo->findOneByLibelle('En création');
+
+        if ($user != $organisateur or $etat != $etatEnCreation) {
+            return $this->redirectToRoute('sortie_recherche');
+        }
+        $manager->remove($sortie);
+        $manager->flush();
+        $this->addFlash('success', 'Votre sortie a été supprimée !');
+        return $this->redirectToRoute('sortie_recherche');
 
 
     }
+
+
 }

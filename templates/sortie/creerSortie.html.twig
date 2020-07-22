@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block script %}
-
+{% if not modification %}
     <script>
         $(document).ready(function() {
             $(".listevilles").on("change", function(event){
@@ -119,5 +119,5 @@
             });
         }
     </script>
-
+    {% endif %}
 {% endblock %}
