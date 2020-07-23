@@ -43,34 +43,48 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSortieParametre($user, $searchParameters): ?array
     {
+        $aujourdhui = new \DateTime();
+
         $result = $this->createQueryBuilder('s')
             ->andWhere('s.dateHeureDebut <= :dateFin')
             ->setParameter(':dateFin', $searchParameters['dateFin']);
-
+//        Sorties organisées par moi
         if ($searchParameters['organiseesParMoi']) {
-            $result = $result->andWhere('s.organisateur = :org')
+            $result = $result
+                ->andWhere('s.organisateur = :org')
                 ->setParameter('org', $user);
         }
-
+//        Sorties auxquelles je suis inscrit/e
         if ($searchParameters['jeSuisInscrit']) {
-            $result = $result->andWhere(':participant MEMBER OF s.participants')
+            $result = $result
+                ->andWhere(':participant MEMBER OF s.participants')
                 ->setParameter('participant', $user);
         }
-
+//        Sorties auxquelles je ne suis pas inscrit/e
         if ($searchParameters['nonInscrit']) {
-            $result = $result->andWhere(':participant  NOT MEMBER OF s.participants')
+            $result = $result
+                ->andWhere(':participant  NOT MEMBER OF s.participants')
                 ->setParameter('participant', $user);
         }
-
+//        Mot-clé
         if (!empty($searchParameters['keywords'])) {
             $kw = $searchParameters['keywords'];
-            $result = $result->andWhere('s.nom LIKE :kw')
+            $result = $result
+                ->andWhere('s.nom LIKE :kw')
                 ->setParameter('kw', "%$kw%");
         }
-        //case Sortie Passes n'est pas coché
-        if (!$searchParameters['sortiesPassees']) {
-            $result = $result->andWhere('s.dateHeureDebut >= :dateDebut')
-                ->setParameter('dateDebut', $searchParameters['dateDebut']);
+//        Sortie passées
+        if ($searchParameters['sortiesPassees']) {
+            $result = $result
+                ->andWhere('s.dateHeureDebut < :aujourdhui')
+                ->setParameter('aujourdhui', $aujourdhui);
+
+        }else{
+            $result = $result
+                ->andWhere('s.dateHeureDebut >= :dateDebut')
+                ->setParameter('dateDebut', $searchParameters['dateDebut'])
+                ->andWhere('s.dateHeureDebut <= :dateFin')
+                ->setParameter('dateFin', $searchParameters['dateFin']);
         }
 
         $result = $result

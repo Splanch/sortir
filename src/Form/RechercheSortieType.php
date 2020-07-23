@@ -19,7 +19,7 @@ class RechercheSortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $aujourdhui = new DateTime();
-        $dansUnMois = new DateTime();
+        $dans5ans = new DateTime();
 
         $builder
             ->add('campus', EntityType::class, [
@@ -41,7 +41,7 @@ class RechercheSortieType extends AbstractType
             ->add('dateFin', DateType::class, [
                 'format' => 'dd MM yyyy',
                 'label' => 'et',
-                'data' => $dansUnMois->modify('+1 month')
+                'data' => $dans5ans->modify('+5 years'),
             ])
             ->add('organiseesParMoi', CheckboxType::class, [
                 'label' => 'Sorties organisées par moi',
