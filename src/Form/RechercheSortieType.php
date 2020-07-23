@@ -24,6 +24,7 @@ class RechercheSortieType extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
+                'label' => 'Campus : ',
                 'choice_label' => function (Campus $campus) {
                     return $campus->getNom();
 
