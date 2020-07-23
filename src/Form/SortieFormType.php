@@ -69,10 +69,14 @@ class SortieFormType extends AbstractType
                     'class' => 'infolong'
                 ]
             ])
-            ->add('enregistrer',SubmitType::class)
-            ->add('publier',SubmitType::class)
+            ->add('enregistrer',SubmitType::class, [
+                'attr'=>['class'=>'btn-primary col']
+            ])
+            ->add('publier',SubmitType::class, [
+                'attr'=>['class'=>'btn-primary col']
+            ])
             ->add('annuler',ButtonType::class,[
-                'attr'=>['onclick'=>'location.href="/sortir/public/"']
+                'attr'=>['onclick'=>'location.href="/sortir/public/"', 'class'=>'btn-primary col']
             ])
         ;
     }

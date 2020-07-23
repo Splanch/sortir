@@ -53,9 +53,12 @@
             {{ form_row(registrationForm.administrateur) }}
             {{ form_row(registrationForm.actif) }}
         {% endif %}
+<div class="row justify-content-md-center">
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <div class="col-sm-1"></div>
+    <button type="reset" class="btn btn-primary">Réinitialiser</button>
+</div>
 
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <button type="reset" class="btn btn-primary">Reset</button>
         {{ form_end(registrationForm) }}
     {% endif %}
 
