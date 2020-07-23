@@ -78,7 +78,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/creer", name="sortie_creer")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, $modification= false): Response
     {
 
         $organisateur = $this->getUser();
@@ -111,6 +111,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/creerSortie.html.twig', [
             'controller_name' => 'SortieController',
             'creerSortie' => $form->createView(),
+            'modification' =>$modification
         ]);
 
     }
@@ -252,7 +253,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier")
      */
-    public function modifier($id, UserInterface $user, Request $request) :Response
+    public function modifier($id, UserInterface $user, Request $request, $modification=true) :Response
     {
         if (!$user) {
             return $this->render('security/login.html.twig');
@@ -306,7 +307,8 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/modifierSortie.html.twig', [
             'controller_name' => 'SortieController',
-            'modifierSortie' => $form->createView()
+            'creerSortie' => $form->createView(),
+            'modification' =>$modification
         ]);
     }
 
