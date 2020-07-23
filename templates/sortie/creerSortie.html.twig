@@ -18,16 +18,18 @@
     {{ form_row(creerSortie.longitude) }}
 
 
-    <div class="panel-btn">
+    <div class="row justify-content-md-center">
         {{ form_row(creerSortie.enregistrer) }}
+        <div class="col-sm-1"></div>
         {{ form_row(creerSortie.publier) }}
+        <div class="col-sm-1"></div>
         {% if modification %}
             <button class="btn btn-primary"  onclick="location.href='{{ path('supprimer', {'id' : sortie.id}) }}';">
                 Supprimer la sortie </button>
         {% endif %}
+
         {{ form_row(creerSortie.annuler) }}
     </div>
-
 
 
 
