@@ -103,8 +103,8 @@ h6, h4, h2 {
 }
 
 .nom-date-recherche {
-    background-color: #f9a927;
-    color: white;
+    background-color: white;
+    color: black;
     margin: 2vh;
     font-size: 1.2rem;
     border-radius: 5px;
