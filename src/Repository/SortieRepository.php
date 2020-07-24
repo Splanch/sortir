@@ -46,8 +46,16 @@ class SortieRepository extends ServiceEntityRepository
         $aujourdhui = new \DateTime();
 
         $result = $this->createQueryBuilder('s')
-            ->andWhere('s.dateHeureDebut <= :dateFin')
-            ->setParameter(':dateFin', $searchParameters['dateFin']);
+            ->andWhere('s.campus = :campus')
+            ->setParameter('campus', $searchParameters['campus'])
+            ->join('s.etat', 'e')
+            ->addSelect('e')
+            ->andWhere("e.libelle !='Historisée'")
+            ->leftJoin('s.participants', 'p')
+            ->addSelect('p')
+            ->join('s.organisateur', 'o')
+            ->addSelect('o');
+
 //        Sorties organisées par moi
         if ($searchParameters['organiseesParMoi']) {
             $result = $result
@@ -88,15 +96,6 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         $result = $result
-            ->andWhere('s.campus = :campus')
-            ->setParameter('campus', $searchParameters['campus'])
-            ->join('s.etat', 'e')
-            ->addSelect('e')
-            ->andWhere("e.libelle !='Historisée'")
-            ->leftJoin('s.participants', 'p')
-            ->addSelect('p')
-            ->join('s.organisateur', 'o')
-            ->addSelect('o')
             ->getQuery()
             ->getResult();
 
